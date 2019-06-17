@@ -7,6 +7,9 @@
         <if test="limitName !=null and limitValue !=null and limitName !='' and limitValue !=''">
             WHERE ${limitName}=#{limitValue}
         </if>
+        <if test="searchName !=null and searchValue !=null and searchName !='' and searchValue !=''">
+            WHERE ${searchName} like'%${searchValue}%'
+        </if>
     </select>
 
     <select id="selectPaging" resultType="java.util.LinkedHashMap">
@@ -22,8 +25,11 @@
             </otherwise>
         </choose>
         FROM ${name}
-        <if test="limitName !=null and limitValue !=null">
+        <if test="limitName !=null and limitValue !=null and limitName !='' and limitValue !=''">
             WHERE ${limitName}=#{limitValue}
+        </if>
+        <if test="searchName !=null and searchValue !=null and searchName !='' and searchValue !=''">
+            WHERE ${searchName} like'%${searchValue}%'
         </if>
         <if test="name == 'feedback'" >
             order by date desc

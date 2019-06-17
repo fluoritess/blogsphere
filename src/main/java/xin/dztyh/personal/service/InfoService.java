@@ -10,9 +10,9 @@ import xin.dztyh.personal.util.PagingUtils;
  */
 public interface InfoService {
 
-    Integer getCount(String tableName,String limitName, String limitValue);
+    Integer getCount(String tableName, String limitName, String limitValue, String searchName, String searchValue);
 
-    PagingUtils getPagingInfo(PagingUtils paging,String tableName,String limitName, String limitValue);
+    PagingUtils getPagingInfo(PagingUtils paging, String tableName, String limitName, String limitValue,String searchName, String searchValue);
 
     boolean updateFeedbackInfoType(int id);
 

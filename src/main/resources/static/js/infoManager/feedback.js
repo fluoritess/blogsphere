@@ -43,6 +43,7 @@ function getTableInfo(page, type, pageSize) {
             type: "post",
             success: function (result) {
                 if (result) {
+                    $('#all_num').html("总共"+result.data.allDataNum+"条");
                     $('#data_table tbody').empty();
                     $('#table_checkbox').remove();
                     // console.log(result.data[0]);

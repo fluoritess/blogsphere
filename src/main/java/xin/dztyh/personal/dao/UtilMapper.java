@@ -15,12 +15,16 @@ public interface UtilMapper {
 
     int selectCount(@Param(value = "name") String name,
                     @Param(value = "limitName") String limitName,
-                    @Param(value = "limitValue") String limitValue);
+                    @Param(value = "limitValue") String limitValue,
+                    @Param(value = "searchName") String searchName,
+                    @Param(value = "searchValue") String searchValue);
 
     List<Map<String,Object>> selectPaging(@Param(value = "name") String name,
                                           @Param(value = "offset") int offset,
                                           @Param(value = "pageSize") int pageSize,
                                           @Param(value = "limitName") String limitName,
-                                          @Param(value = "limitValue") String limitValue);
+                                          @Param(value = "limitValue") String limitValue,
+                                          @Param(value = "searchName") String searchName,
+                                          @Param(value = "searchValue") String searchValue);
 
 }

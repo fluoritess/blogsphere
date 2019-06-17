@@ -1,9 +1,10 @@
 var page = 1;
-var type = "0";//代表未读数据
 var pageSize = 5;
 
 $(function () {
-    getTableInfo(page, type, pageSize);
+    $('#search_value').val("");
+    $('#search_type').val("");
+    getTableInfo(page,pageSize);
 });
 
 //添加翻页前面的两个按钮
@@ -20,21 +21,45 @@ function addTarget() {
 function pageSizeChange() {
     var webPageSize = $('#webPageSize').find('option:selected').val();
     pageSize = webPageSize;
-    getTableInfo(page, type, pageSize);
+    getTableInfo(page,pageSize);
 }
+
+//切换页面
+$(function () {
+    $('#info_type>li>a').click(function () {
+        $this = $(this);
+        $("#info_type>li").removeClass("active info_type_active");
+        $this.parent().addClass("active info_type_active");
+        if ($this.html() === "访问日志") {
+            $('#paging_foot').empty();
+            $('#chart_info').empty();
+            $('#data_table').removeAttr("hidden");
+            $('#all_num').removeAttr("hidden");
+            $('#search_info').attr("onclick","searchInfo()");
+            $('#webPageSize').attr("onchange","pageSizeChange()");
+            getTableInfo(page, pageSize);
+        } else if ($this.html() === "访问量统计") {
+            $('#paging_foot').empty();
+            $('#data_table').attr("hidden","hidden");
+            $('#all_num').attr("hidden","hidden");
+            $('#search_info').attr("onclick",false);
+            $('#webPageSize').attr("onchange",false);
+        }
+    });
+});
 
 //搜索信息
 function searchInfo() {
     var searchName = $('#search_type').find('option:selected').val();
     var searchValue = $('#search_value').val();
-    getTableInfo(page, type, pageSize, searchName, searchValue);
+    getTableInfo(page,pageSize, searchName, searchValue);
 }
 
 //获取表格信息
-function getTableInfo(page, type, pageSize, searchName, searchValue) {
+function getTableInfo(page,pageSize, searchName, searchValue) {
     var fd = new FormData();
     fd.append("nowPage", page);
-    if (typeof searchValue !== "undifined" && typeof searchName !== "undifined" && searchValue !== "" && searchName !== "") {
+    if (typeof searchValue !== "undefined" && typeof searchName !== "undefined" && searchValue !== "" && searchName !== "") {
         fd.append("searchName", searchName);
         fd.append("searchValue", searchValue);
     }
@@ -52,6 +77,7 @@ function getTableInfo(page, type, pageSize, searchName, searchValue) {
             type: "post",
             success: function (result) {
                 if (result) {
+                    $('#all_num').html("总共"+result.data.allDataNum+"条");
                     $('#data_table tbody').empty();
                     $('#table_checkbox').remove();
                     // console.log(result.data[0]);
@@ -70,7 +96,7 @@ function getTableInfo(page, type, pageSize, searchName, searchValue) {
                     }
                     initTableCheckbox();
                     if (result.data.allDataNum !== 0) {
-                        setPage(page, type, pageSize, result.data.allPageNum, searchName, searchValue);
+                        setPage(page, pageSize, result.data.allPageNum, searchName, searchValue);
                         addTarget();
                     }
                 }
@@ -81,7 +107,7 @@ function getTableInfo(page, type, pageSize, searchName, searchValue) {
         });
 }
 
-function setPage(nowPage, is_read, pageSize, totalPages, searchName, searchValue) {
+function setPage(nowPage, pageSize, totalPages, searchName, searchValue) {
     $(".pagination").bootstrapPaginator({
         //设置版本号
         bootstrapMajorVersion: 3,
@@ -113,143 +139,26 @@ function setPage(nowPage, is_read, pageSize, totalPages, searchName, searchValue
             switch (type) {
                 case "first":
                     currentTarget.bootstrapPaginator("showFirst");
-                    getTableInfo(page, is_read, pageSize, searchName, searchValue);
+                    getTableInfo(page, pageSize, searchName, searchValue);
                     break;
                 case "prev":
                     currentTarget.bootstrapPaginator("showPrevious");
-                    getTableInfo(page, is_read, pageSize, searchName, searchValue);
+                    getTableInfo(page, pageSize, searchName, searchValue);
                     break;
                 case "next":
                     currentTarget.bootstrapPaginator("showNext");
-                    getTableInfo(page, is_read, pageSize, searchName, searchValue);
+                    getTableInfo(page, pageSize, searchName, searchValue);
                     break;
                 case "last":
                     currentTarget.bootstrapPaginator("showLast");
-                    getTableInfo(page, is_read, pageSize, searchName, searchValue);
+                    getTableInfo(page, pageSize, searchName, searchValue);
                     break;
                 case "page":
                     currentTarget.bootstrapPaginator("show", page);
-                    getTableInfo(page, is_read, pageSize, searchName, searchValue);
+                    getTableInfo(page, pageSize, searchName, searchValue);
                     break;
             }
         }
     })
 }
 
-//获取选中的元素
-function getCheckIndex() {
-    var indexArray = [];
-    $('table tbody').find(':checkbox:checked').each(function () {
-        var val = $(this).parent().parent().index();
-        indexArray.push(val);
-        // console.log(val)
-    });
-    if (indexArray.length > 1) {
-        alert('只能选择一行信息！');
-        return false;
-    } else if (indexArray.length === 0) {
-        alert('选中信息不能为空！');
-        return false;
-    }
-    var index = indexArray[0];
-    var ty = $('table tbody');
-    var id = ty.find('tr').eq(index).children('td').eq(1).text();
-    var feedback_info = ty.find('tr').eq(index).children('td').eq(2).text();
-    var contact_info = ty.find('tr').eq(index).children('td').eq(3).text();
-    var ip_address = ty.find('tr').eq(index).children('td').eq(4).text();
-    var submit_date = ty.find('tr').eq(index).children('td').eq(5).text();
-
-    $("#id").val(id);
-    $("#feedback_info").val(feedback_info);
-    $("#contact_info").html(contact_info);
-    $("#ip_address").html(ip_address);
-    $("#submit_date").html(submit_date);
-    var active_li = $('#info_type .active')[0];
-    $('#modal-footer').empty();
-    if (active_li.childNodes[0].innerHTML === "未读消息") {
-        $('#modal-footer').append("<button type='button' class='btn btn-default' data-dismiss='modal'>关闭\n" +
-            "                    </button>\n" +
-            "                    <button type='submit' class='btn btn-primary'>\n" +
-            "                        确认阅读\n" +
-            "                    </button>\n" +
-            "                    <span id='tip'> </span>")
-    } else {
-        $('#modal-footer').append("<button type='button' class='btn btn-default' data-dismiss='modal'>关闭\n" +
-            "                    </button>")
-    }
-    $('#addUserModal').modal('show');
-    // $("#func").val("modify");
-}
-
-function modifyInfo() {
-    var act = $.trim($('#act').val());
-    var data = {"id": $("#id").val()};
-    // 异步提交数据到增加信息
-    $.ajax(
-        {
-            url: "/index/info/readFeedbackInfo",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            type: "post",
-            beforeSend: function () {
-                $("#tip").html("<span style='color:blue'>正在处理...</span>");
-                return true;
-            },
-            success: function (data) {
-                if (data.code === '0') {
-                    var msg = "添加";
-                    if (act === "edit") msg = "编辑";
-                    $("#tip").html("<span style='color:blueviolet'>恭喜，" + msg + "成功！</span>");
-                    $("#id").val("");
-                    $("#feedback_info").val("");
-                    $("#contact_info").html("");
-                    $("#ip_address").html("");
-                    $("#submit_date").html("");
-                    window.parent[0].location.reload();
-                    // getInfoNum();
-                    location.reload();
-                }
-                else {
-                    $("#tip").html("<span style='color:red'>失败，请重试</span>");
-                    alert('操作失败');
-                }
-            },
-            error: function () {
-                alert('请求出错');
-            },
-            complete: function () {
-                $('#acting_tips').hide();
-            }
-        });
-    return false;
-}
-
-$(function () {
-    $('#addUserModal').on('hide.bs.modal', function () {
-        // 关闭时清空edit状态为add
-        // location.reload();
-        $("#tip").html("");
-        $('table').find(':checkbox:checked').each(function () {
-            $(this).prop("checked", false);
-            // console.log(val)
-        });
-    })
-});
-
-//切换页面
-$(function () {
-    $('#info_type>li>a').click(function () {
-        $this = $(this);
-        $("#info_type>li").removeClass("active info_type_active");
-        $this.parent().addClass("active info_type_active");
-        if ($this.html() === "已读消息") {
-            type = "1";
-            $('#paging_foot').empty();
-            getTableInfo(page, type, pageSize);
-        } else if ($this.html() === "未读消息") {
-            type = "0";
-            $('#paging_foot').empty();
-            getTableInfo(page, type, pageSize);
-        }
-    });
-});

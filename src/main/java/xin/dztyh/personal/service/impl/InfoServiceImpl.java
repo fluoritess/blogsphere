@@ -24,13 +24,13 @@ public class InfoServiceImpl implements InfoService {
     FeedbackMapper feedbackMapper;
 
     @Override
-    public Integer getCount(String tableName, String limitName, String limitValue) {
-        return utilMapper.selectCount(tableName, limitName, limitValue);
+    public Integer getCount(String tableName, String limitName, String limitValue,String searchName, String searchValue) {
+        return utilMapper.selectCount(tableName, limitName, limitValue,searchName,searchValue);
     }
 
     @Override
-    public PagingUtils getPagingInfo(PagingUtils paging, String tableName, String limitName, String limitValue) {
-        paging.setList(utilMapper.selectPaging(tableName, paging.getOffset(), paging.getPageSize(), limitName, limitValue));
+    public PagingUtils getPagingInfo(PagingUtils paging, String tableName, String limitName, String limitValue,String searchName, String searchValue) {
+        paging.setList(utilMapper.selectPaging(tableName, paging.getOffset(), paging.getPageSize(), limitName, limitValue,searchName,searchValue));
         return paging;
     }
 

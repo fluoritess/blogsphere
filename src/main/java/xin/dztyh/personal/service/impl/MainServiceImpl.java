@@ -85,7 +85,7 @@ public class MainServiceImpl implements MainService {
 
     @Override
     public Integer getVisitedAllNum() {
-        return utilMapper.selectCount("visited_info",null,null);
+        return utilMapper.selectCount("visited_info",null,null,null,null);
     }
 
     @Override

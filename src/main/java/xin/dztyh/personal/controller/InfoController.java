@@ -38,8 +38,8 @@ public class InfoController {
                                               @RequestParam(value = "limitName",required = false) String limitName,
                                               @RequestParam(value = "limitValue",required = false) String limitValue){
         PagingUtils paging=new PagingUtils(nowPage,pageSize);
-        paging.setAllDataNum(infoService.getCount("feedback",limitName,limitValue));
-        paging=infoService.getPagingInfo(paging,"feedback",limitName,limitValue);
+        paging.setAllDataNum(infoService.getCount("feedback",limitName,limitValue,null,null));
+        paging=infoService.getPagingInfo(paging,"feedback",limitName,limitValue,null,null);
         return R.ok().put("data",paging);
     }
 
@@ -51,7 +51,7 @@ public class InfoController {
     @ResponseBody
     @RequestMapping("/getNotReadFeedbackNum")
     public Map<String,Object> getNotReadFeedbackNum(){
-        int num=infoService.getCount("feedback","is_read","0");
+        int num=infoService.getCount("feedback","is_read","0",null,null);
         return R.ok().put("num",num);
     }
 
@@ -82,10 +82,13 @@ public class InfoController {
                                               @RequestParam(value = "nowPage",required = false) String nowPage,
                                               @RequestParam(value = "searchName",required = false) String searchName,
                                               @RequestParam(value = "searchValue",required = false) String searchValue){
+        if ((searchName!=null&&searchName.equals("undefined"))||(searchValue!=null&&searchValue.equals("undefined"))){
+            searchName=null;
+            searchValue=null;
+        }
         PagingUtils paging=new PagingUtils(nowPage,pageSize);
-        paging.setAllDataNum(infoService.getCount("visited_info",null,null));
-        paging=infoService.getPagingInfo(paging,"visited_info",null,null);
-        System.out.println(searchName+searchValue);
+        paging.setAllDataNum(infoService.getCount("visited_info",null,null,searchName,searchValue));
+        paging=infoService.getPagingInfo(paging,"visited_info",null,null,searchName,searchValue);
         return R.ok().put("data",paging);
     }
 }
