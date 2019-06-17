@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.dztyh.personal.dao.MainSiteInfoMapper">
+  <resultMap id="BaseResultMap" type="xin.dztyh.personal.pojo.MainSiteInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sign_one" jdbcType="VARCHAR" property="signOne" />
+    <result column="sign_two" jdbcType="VARCHAR" property="signTwo" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="background_url" jdbcType="VARCHAR" property="backgroundUrl" />
+    <result column="resume_file" jdbcType="VARCHAR" property="resumeFile" />
+    <result column="personal_pic" jdbcType="VARCHAR" property="personalPic" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, sign_one, sign_two, detail, background_url, resume_file, personal_pic, 
+    modify_date
+  </sql>
+  <select id="selectByExample" parameterType="xin.dztyh.personal.pojo.MainSiteInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from main_site_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from main_site_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from main_site_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="xin.dztyh.personal.pojo.MainSiteInfoExample">
+    delete from main_site_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="xin.dztyh.personal.pojo.MainSiteInfo">
+    insert into main_site_info (id, name, sign_one, 
+      sign_two, detail, background_url, 
+      resume_file, personal_pic, modify_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{signOne,jdbcType=VARCHAR}, 
+      #{signTwo,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, #{backgroundUrl,jdbcType=VARCHAR}, 
+      #{resumeFile,jdbcType=VARCHAR}, #{personalPic,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xin.dztyh.personal.pojo.MainSiteInfo">
+    insert into main_site_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="signOne != null">
+        sign_one,
+      </if>
+      <if test="signTwo != null">
+        sign_two,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+      <if test="backgroundUrl != null">
+        background_url,
+      </if>
+      <if test="resumeFile != null">
+        resume_file,
+      </if>
+      <if test="personalPic != null">
+        personal_pic,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="signOne != null">
+        #{signOne,jdbcType=VARCHAR},
+      </if>
+      <if test="signTwo != null">
+        #{signTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="backgroundUrl != null">
+        #{backgroundUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeFile != null">
+        #{resumeFile,jdbcType=VARCHAR},
+      </if>
+      <if test="personalPic != null">
+        #{personalPic,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="xin.dztyh.personal.pojo.MainSiteInfoExample" resultType="java.lang.Long">
+    select count(*) from main_site_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update main_site_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signOne != null">
+        sign_one = #{record.signOne,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signTwo != null">
+        sign_two = #{record.signTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detail != null">
+        detail = #{record.detail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backgroundUrl != null">
+        background_url = #{record.backgroundUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeFile != null">
+        resume_file = #{record.resumeFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalPic != null">
+        personal_pic = #{record.personalPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyDate != null">
+        modify_date = #{record.modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update main_site_info
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      sign_one = #{record.signOne,jdbcType=VARCHAR},
+      sign_two = #{record.signTwo,jdbcType=VARCHAR},
+      detail = #{record.detail,jdbcType=VARCHAR},
+      background_url = #{record.backgroundUrl,jdbcType=VARCHAR},
+      resume_file = #{record.resumeFile,jdbcType=VARCHAR},
+      personal_pic = #{record.personalPic,jdbcType=VARCHAR},
+      modify_date = #{record.modifyDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="xin.dztyh.personal.pojo.MainSiteInfo">
+    update main_site_info
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="signOne != null">
+        sign_one = #{signOne,jdbcType=VARCHAR},
+      </if>
+      <if test="signTwo != null">
+        sign_two = #{signTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="backgroundUrl != null">
+        background_url = #{backgroundUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeFile != null">
+        resume_file = #{resumeFile,jdbcType=VARCHAR},
+      </if>
+      <if test="personalPic != null">
+        personal_pic = #{personalPic,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xin.dztyh.personal.pojo.MainSiteInfo">
+    update main_site_info
+    set name = #{name,jdbcType=VARCHAR},
+      sign_one = #{signOne,jdbcType=VARCHAR},
+      sign_two = #{signTwo,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      background_url = #{backgroundUrl,jdbcType=VARCHAR},
+      resume_file = #{resumeFile,jdbcType=VARCHAR},
+      personal_pic = #{personalPic,jdbcType=VARCHAR},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

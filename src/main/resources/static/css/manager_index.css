@@ -1,0 +1,153 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: "微软雅黑";
+    /*height: 1080px;*/
+    /*min-height: 200px;*/
+    height:855px;
+}
+header{
+    height: 60px;
+    width: 100%;
+    background-color: #e4e4e4;
+
+}
+.catalog{
+    width: 200px;
+    margin: auto;
+}
+.user{
+    height: 60px;
+    color: #fff;
+}
+.user>img{
+    margin-top: 10px;
+    margin-left: 14px;
+    display: block;
+    float: left;
+}
+.user>p{
+    margin-left: 14px;
+    line-height: 60px;
+    float: left;
+}
+.menu{
+    height: 700px;
+}
+.menu ul{
+    list-style: none;
+}
+.menu>div>ul>li{
+    cursor: pointer;
+    width: 100%;
+}
+.menu>div>ul>li img{
+    margin-left: 20px;
+    margin-top: 20px;
+    display: block;
+    float: left;
+    width: 20px;
+    height: 20px;
+}
+.menu>div>ul>li p{
+    margin-left: 20px;
+    margin-top: 20px;
+    float: left;
+    color: #fff;
+    font-size: 14px;
+}
+.menu>div>ul>li:hover{
+    background-color: rgb(26, 40, 64);
+}
+.onon{
+    height: 60px;
+}
+.hide{
+    clear: both;
+    display: none;
+}
+.hide>ul{
+    list-style: none;
+    color: #f0f0f0;
+}
+.hide>ul>li{
+    height: 60px;
+    line-height: 60px;
+    font-size: 12px;
+    margin-left: 60px;
+}
+.hide>ul>li>a{
+    color: #f0f0f0;
+    text-decoration: none;
+}
+
+
+
+
+
+.divbox{
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    background-color: rgb(29, 45, 69);
+}
+.frame{
+    width: 15%;
+    height: 100%;
+    float: left;
+}
+.frame2{
+    height: 100%;
+    /*float: right;*/
+}
+.divbox2{
+    width: 85%;
+    height: 100%;
+}
+
+.navbar>.nav-ul{
+    float: right;
+    width: 250px;
+    font-size: 17px;
+    list-style: none;
+    margin-left: 1320px;
+}
+
+.nav-ul>li{
+    width: 30%;
+    text-align: center;
+}
+
+.nav-ul a{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-dl{
+    z-index: 2;
+    display: none;
+    background-color: #b6d9e9;
+    font-size: 15px;
+    top: 0;
+}
+.nav-dl a{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-dl a:hover{
+    text-decoration: none;
+
+}
+.nav-dl a:hover .nav-dl{
+    background-color: #abcddd;
+}
+
+.nav-ul li:hover .nav-dl{
+    display: block;
+}
+
+
+

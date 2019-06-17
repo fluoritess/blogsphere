@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <script src="../../js/jquery-3.4.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/main/menu.js"></script>
+
+    <style type="text/css">
+        body{
+            border-right:1px solid #e6e6e6;
+        }
+
+        .li_active{
+            border-bottom: 2px solid #2196f3;
+            font-weight: bold;
+        }
+
+        #main-nav>li{
+            border: 1px solid #2196f3;
+            border-radius:5px;
+        }
+
+        .submenu li a i{
+            padding-left: 15px;
+        }
+    </style>
+</head>
+<body id="web_body">
+<div class="container-fluid" >
+    <div class="row">
+        <div class="col-md-2">
+            <ul id="main-nav" class="nav nav-pills nav-stacked">
+                <li>
+                    <a href="#">
+                        <i class="glyphicon glyphicon-home"></i>
+                        首页
+                    </a>
+                </li>
+                <li>
+                    <a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
+                        <i class="glyphicon glyphicon-th"></i>
+                        主页管理
+                        <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul id="systemSetting" class="nav nav-pills collapse nav-stacked submenu" style="height: 0px;">
+                        <li>
+                            <a href="./information.html" target="frame">
+                                <i class="glyphicon glyphicon-user"></i>
+                                主页描述管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./professional.html" target="frame">
+                                <i class="glyphicon glyphicon-wrench"></i>
+                                专业知识管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./data_statistics.html" target="frame">
+                                <i class="glyphicon glyphicon-tasks"></i>
+                                数据统计管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./capacity.html" target="frame">
+                                <i class="glyphicon glyphicon-briefcase"></i>
+                                能力管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./project.html" target="frame">
+                                <i class="glyphicon glyphicon-th-large"></i>
+                                项目管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./resume.html" target="frame">
+                                <i class="glyphicon glyphicon-list-alt"></i>
+                                简历管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./quotes.html" target="frame">
+                                <i class="glyphicon glyphicon-book"></i>
+                                名言管理
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#informationManager" class="nav-header collapsed" data-toggle="collapse" id="informationManager_a">
+                        <i class="glyphicon glyphicon-tags"></i>
+                        信息管理
+                        <!--<span class="label label-warning pull-right">5</span>-->
+                        <!--<span class="pull-right glyphicon glyphicon-chevron-down"></span>-->
+                    </a>
+                    <ul id="informationManager" class="nav nav-pills collapse nav-stacked submenu" style="height: 0px;">
+                        <li>
+                            <a href="../infoManager/feedback.html" target="frame" id="feedback_a">
+                                <i class="glyphicon glyphicon-comment"></i>
+                                反馈信息
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../infoManager/visitedInfo.html" target="frame" id="visit_a">
+                                <i class="glyphicon glyphicon-send"></i>
+                                访问信息
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#systemManager" class="nav-header collapsed" data-toggle="collapse" id="systemManager_a">
+                        <i class="glyphicon glyphicon-cog"></i>
+                        系统配置
+                        <!--<span class="label label-warning pull-right">5</span>-->
+                    </a>
+                    <ul id="systemManager" class="nav nav-pills collapse nav-stacked submenu" style="height: 0px;">
+                        <li>
+                            <a href="../infoManager/feedback.html" target="frame" id="log_export">
+                                <i class="glyphicon glyphicon-comment"></i>
+                                日志导出
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

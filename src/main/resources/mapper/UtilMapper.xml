@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.dztyh.personal.dao.UtilMapper">
+    <!--查询总数量-->
+    <select id="selectCount" resultType="int">
+        SELECT COUNT(*) FROM ${name}
+        <if test="limitName !=null and limitValue !=null">
+            WHERE ${limitName}=#{limitValue}
+        </if>
+    </select>
+
+    <select id="selectPaging" resultType="java.util.LinkedHashMap">
+        SELECT
+        <choose>
+            <when test="name == 'page_inf'">
+                id,application_id as application,parent_id as parentId,
+                (select p.pagename from page_inf p where p.id = page_inf.parent_id) as parentName,
+                pagename,url,perms,type,icon,order_num,detail
+            </when>
+            <otherwise>
+                *
+            </otherwise>
+        </choose>
+        FROM ${name}
+        <if test="limitName !=null and limitValue !=null">
+            WHERE ${limitName}=#{limitValue}
+        </if>
+        <if test="name == 'feedback'">
+            order by date desc
+        </if>
+        limit #{offset}, #{pageSize}
+    </select>
+</mapper>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息管理</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.3.7.min.css">
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/manager/table.js"></script>
+    <script src="../../js/manager/main_info.js"></script>
+    <style type="text/css">
+        .main-info {
+            width: 1400px;
+            margin: 20px auto;
+            border: #b7b7b7 solid 1px;
+            border-radius: 5px;
+            color: rgb(115, 135, 156);
+        }
+
+        .form-info {
+            width: 750px;
+            margin: 0 auto;
+        }
+
+        .form-info label {
+            font-size: 16px;
+        }
+
+        .preview{
+            /*padding-left: 30px;*/
+            cursor:pointer;
+            margin-left: 30px;
+        }
+
+    </style>
+</head>
+<body>
+<div style="width: 1400px;margin: 0 auto;">
+    <h3 style="color: rgb(115, 135, 156)">主页描述信息</h3>
+</div>
+<div class="main-info">
+    <div style="padding: 10px 17px">
+        <h4 style="color:rgb(115, 135, 156);">主页信息修改
+            <small>&nbsp;姓名，描述，介绍</small>
+        </h4>
+        <hr style="border: #b4b4b4 1px solid">
+        <form class="form-info form-horizontal" onsubmit="return false" id="form-info" action="#">
+            <div class="form-group">
+                <label for="name" class="col-md-2 control-label">主页姓名</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" placeholder="" id="name" name="name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="introduce1" class="col-md-2 control-label">签名一</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" placeholder="" id="introduce1" name="signOne">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="introduce2" class="col-md-2 control-label">签名二</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" placeholder="" id="introduce2" name="signTwo">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="introduce3" class="col-md-2 control-label">介绍</label>
+                <div class="col-md-10">
+                    <textarea class="form-control" rows="3" id="introduce3" name="detail"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="backgroundUrl" class="col-sm-2 control-label">主页背景图片</label>
+                <div class="col-sm-10">
+                    <input type="file" class="" name="backgroundUrl" value="" id="backgroundUrl"
+                           placeholder="背景图片">
+                    <p class="help-block">分辨率为1920*1080，大小不超过4MB.<a class="preview" id="pre_background" target="_blank">预览当前背景图片</a></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="resumeFile" class="col-sm-2 control-label">简历文件</label>
+                <div class="col-sm-10">
+                    <input type="file" class="" name="resumeFile" value="" id="resumeFile"
+                           placeholder="简历文件">
+                    <p class="help-block">格式为PDF，大小不超过5MB. <a class="preview" id="pre_resume" target="_blank">预览当前简历</a></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="personalPic" class="col-sm-2 control-label">个人照片</label>
+                <div class="col-sm-10">
+                    <input type="file" class="" name="personalPic" value="" id="personalPic"
+                           placeholder="简历文件">
+                    <p class="help-block">图片为竖状，大小不超过4MB. <a class="preview" id="pre_personal_pic" target="_blank">预览当前个人照片</a></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="modify_date" class="col-md-2 control-label">上次修改时间</label>
+                <div class="col-md-10">
+                    <p class="form-control-static" id="modify_date" style="font-size: 16px;">2019-5-15 19:23</p>
+                </div>
+            </div>
+            <hr style="color: #b4b4b4">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-primary">取消</button>
+                    <button type="submit" class="btn btn-success" style="margin-left: 20px" id="submit_info"
+                    onclick="submit_form()">提交</button>
+                    <span id="tip"> </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+package xin.dztyh.personal.service;
+
+import xin.dztyh.personal.util.PagingUtils;
+
+/**
+ * @author tyh
+ * @Package xin.dztyh.personal.service
+ * @Description:
+ * @date 19-6-10 下午1:39
+ */
+public interface InfoService {
+
+    Integer getCount(String tableName,String limitName, String limitValue);
+
+    PagingUtils getPagingInfo(PagingUtils paging,String tableName,String limitName, String limitValue);
+
+    boolean updateFeedbackInfoType(int id);
+
+}

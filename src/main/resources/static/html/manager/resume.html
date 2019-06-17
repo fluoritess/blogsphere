@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>简历信息管理</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.3.7.min.css">
+    <link rel="stylesheet" href="../../css/owl.theme.min.css">
+    <link rel="stylesheet" href="../../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../css/font-awesome.min.css" media="screen"/>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/manager/table.js"></script>
+    <script src="../../js/manager/resume.js"></script>
+    <style type="text/css">
+        .main-info {
+            width: 1400px;
+            margin: 20px auto;
+            border: #b7b7b7 solid 1px;
+            border-radius: 5px;
+            color: rgb(115, 135, 156);
+        }
+
+        .table-info {
+            margin: 20px auto;
+            text-align: center;
+            table-layout: fixed;
+        }
+
+        .table-info th {
+            text-align: center;
+        }
+
+        .top-button {
+            padding-right: 50px;
+            float: right;
+        }
+
+        .top-button button {
+            margin-left: 5px;
+        }
+
+        td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 1400px;margin: 0 auto;">
+    <h3 style="color: rgb(115, 135, 156)">简历信息展示</h3>
+</div>
+<div class="main-info">
+    <div style="padding: 10px 17px">
+        <div class="panel-body" style="border-bottom:#b4b4b4 2px solid">
+            <h4 style="color:rgb(115, 135, 156);float: left">简历展示修改
+                <small>&nbsp;地点，年份，身份</small>
+            </h4>
+            <div class="h4 top-button">
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                        data-target="#addUserModal" onclick="$('#func').val('add')">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    新增
+                </button>
+                <button type="button" class="btn btn-primary btn-sm"
+                        onclick="return getCheckIndex('modify')">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    修改
+                </button>
+                <!--onclick="return get_edit_info($('#id').val())"-->
+                <button type="button" class="btn btn-danger btn-sm"
+                        onclick="return getCheckIndex('delete')">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    删除
+                </button>
+            </div>
+
+        </div>
+        <table class="table table-striped table-bordered table-hover table-info" id="data_table">
+            <thead>
+            <tr>
+                <th width="60px">#</th>
+                <th width="180px">地址</th>
+                <th width="150px">年份</th>
+                <th width="200px">科目</th>
+                <th>描述</th>
+                <th width="80px">种类</th>
+                <th width="180px">上次修改时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="panel-footer">
+            <nav>
+                <ul class="pagination pagination-sm">
+                    <li class="disabled">
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">«</span>
+                        </a>
+                    </li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">»</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div><!-- end of panel-footer -->
+    </div>
+</div>
+<form method="post" action="#" class="form-horizontal" role="form" id="form_data" onsubmit="return check_form()"
+      style="margin: 20px;">
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        简历信息
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="id" class="col-sm-3 control-label">id</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="id" name="id" value=""
+                                       placeholder="id自动生成，无需填写" readonly="readonly">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address" class="col-sm-3 control-label">地址</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="address" name="address" value=""
+                                       placeholder="地址">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="years" class="col-sm-3 control-label">年份</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="years" value="" id="years"
+                                       placeholder="年份 例如：2008 - 2010">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject" class="col-sm-3 control-label">科目</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="subject" value="" id="subject"
+                                       placeholder="科目 例如：后端工程师">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="type" class="col-sm-3 control-label">种类</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="type" id="type">
+                                    <option>教育</option>
+                                    <option>经历</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="detail" class="col-sm-3 control-label">简历描述</label>
+                            <div class="col-sm-9">
+                                <textarea id="detail" class="form-control" placeholder="简历描述" name="detail">
+
+                                </textarea>
+                            </div>
+                        </div>
+
+                        <input type="hidden" value="add" id="func">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        提交
+                    </button>
+                    <span id="tip"> </span>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</form>
+</body>
+</html>

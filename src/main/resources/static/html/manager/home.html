@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../../css/manager_index.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar" style="box-shadow:none;position: absolute;">
+            <a class="navbar-brand">Tyh网站管理</a>
+            <ul class="navbar-nav nav-ul">
+                <li>
+                    <a class="glyphicon glyphicon-bell"></a>
+                </li>
+                <li>
+                    <a class="glyphicon glyphicon-envelope"></a>
+                </li>
+                <li>
+                    <a class="glyphicon glyphicon-user"></a>
+                    <dl class="nav-dl">
+                        <dd>
+                            <a href="/index/loginOut">登 出</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+    <div class="frame">
+        <iframe src="menu.html" name="menu" frameborder="0" class="divbox" id="menu"></iframe>
+    </div>
+    <div class="frame2">
+        <iframe src="" name="frame" frameborder="0" class="divbox2"></iframe>
+    </div>
+<script src="../../js/manager_index.js"></script>
+</body>
+</html>
