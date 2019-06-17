@@ -71,7 +71,8 @@ public class ShiroConfig {
         //设置拦截目录
         filterUrl.put("/html/**","loginFilter,authc");
 //        filterUrl.put("/infoManager/*","loginFilter,authc");
-        filterUrl.put("/**/*.action","loginFilter,authc");
+        filterUrl.put("/manager/*","loginFilter,authc");
+        filterUrl.put("/info/*","loginFilter,authc");
         filterUrl.put("/druid/**","loginFilter,authc");
 
 

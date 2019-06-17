@@ -12,7 +12,7 @@
     <script src="../../js/bootstrap-paginator.js"></script>
     <script src="../../js/manager/table.js"></script>
     <script src="../../js/main/menu.js"></script>
-    <script src="../../js/infoManager/feedback.js"></script>
+    <script src="../../js/infoManager/visitedInfo.js"></script>
     <style type="text/css">
         .main-info {
             width: 1400px;
@@ -84,17 +84,34 @@
             </h4>
 
             <div class="h4 top-button">
-                <button type="button" class="btn btn-primary btn-sm"
-                        onclick="getCheckIndex()">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    查看详情
-                </button>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <select id="search_type" class="form-control">
+                            <option selected="selected" value="ip">Ip地址</option>
+                            <option value="address">地址</option>
+                            <option value="url">访问url</option>
+                            <option value="date">访问时间</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <!--<label for="inputPassword2" class="sr-only">Password</label>-->
+                        <input type="text" class="form-control" id="search_value" placeholder="搜索内容">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-sm"
+                                onclick="searchInfo()">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            搜索
+                        </button>
+                    </div>
+                </form>
+
             </div>
             <div class="h5 top-button">
                 <label>
                     <select id="webPageSize" onchange="pageSizeChange()"
                             aria-controls="DataTables_Table_0" size="1" name="DataTables_Table_0_length"
-                            class="g-pages">
+                            class="g-pages form-control">
                         <option selected="selected" value="5">5条/页</option>
                         <option value="10">10条/页</option>
                         <option value="15">15条/页</option>
@@ -123,94 +140,11 @@
         <div class="panel-footer">
             <nav>
                 <ul class="pagination pagination-sm" id="paging_foot">
-                    <!--<li class="disabled">-->
-                    <!--<a href="#" aria-label="Previous">-->
-                    <!--<span aria-hidden="true">«</span>-->
-                    <!--</a>-->
-                    <!--</li>-->
-                    <!--<li class="active"><a href="#">1</a></li>-->
-                    <!--<li><a href="#">2</a></li>-->
-                    <!--<li><a href="#">3</a></li>-->
-                    <!--<li><a href="#">4</a></li>-->
-                    <!--<li><a href="#">5</a></li>-->
-                    <!--<li>-->
-                    <!--<a href="#" aria-label="Next">-->
-                    <!--<span aria-hidden="true">»</span>-->
-                    <!--</a>-->
-                    <!--</li>-->
+
                 </ul>
             </nav>
         </div><!-- end of panel-footer -->
     </div>
 </div>
-<form method="post" action="#" class="form-horizontal" role="form" id="form_data" onsubmit="return modifyInfo()"
-      style="margin: 20px;">
-    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        数据统计信息
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label for="id" class="col-sm-3 control-label">id</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="id" name="id" value=""
-                                       placeholder="id自动生成，无需填写" readonly="readonly">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="feedback_info" class="col-sm-3 control-label">反馈信息</label>
-                            <div class="col-sm-9">
-                                <textarea id="feedback_info" class="form-control" placeholder="反馈信息"
-                                          name="feedback_info" readonly>
-
-                                </textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="contact_info" class="col-sm-3 control-label">联系方式</label>
-                            <div class="col-sm-9">
-                                <!--<input type="text" class="form-control" name="contact_info" value="" id="contact_info"
-                                       placeholder="联系方式">-->
-                                <p class="form-control-static" id="contact_info" style="font-size: 15px;"></p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="ip_address" class="col-sm-3 control-label">ip地址</label>
-                            <div class="col-sm-9">
-                                <p class="form-control-static" id="ip_address" style="font-size: 15px;"></p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="submit_date" class="col-sm-3 control-label">提交时间</label>
-                            <div class="col-sm-9">
-                                <p class="form-control-static" id="submit_date" style="font-size: 15px;"></p>
-                            </div>
-                        </div>
-                        <input type="hidden" value="add" id="func">
-                    </form>
-                </div>
-                <div class="modal-footer" id="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                        确认阅读
-                    </button>
-                    <span id="tip"> </span>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
-</form>
 </body>
 </html>

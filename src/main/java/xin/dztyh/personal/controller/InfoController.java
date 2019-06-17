@@ -71,4 +71,21 @@ public class InfoController {
         }
     }
 
+    /**
+     * 获取反馈信息
+     * @return
+     */
+    @ArchivesLog(operationName = "获取[访问信息]", operationType = "获取信息")
+    @ResponseBody
+    @RequestMapping("/getVisitedInfo")
+    public Map<String,Object> getVisitedInfo(@RequestParam(value = "pageSize",required = false) String pageSize,
+                                              @RequestParam(value = "nowPage",required = false) String nowPage,
+                                              @RequestParam(value = "searchName",required = false) String searchName,
+                                              @RequestParam(value = "searchValue",required = false) String searchValue){
+        PagingUtils paging=new PagingUtils(nowPage,pageSize);
+        paging.setAllDataNum(infoService.getCount("visited_info",null,null));
+        paging=infoService.getPagingInfo(paging,"visited_info",null,null);
+        System.out.println(searchName+searchValue);
+        return R.ok().put("data",paging);
+    }
 }

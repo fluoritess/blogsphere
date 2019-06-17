@@ -4,7 +4,7 @@
     <!--查询总数量-->
     <select id="selectCount" resultType="int">
         SELECT COUNT(*) FROM ${name}
-        <if test="limitName !=null and limitValue !=null">
+        <if test="limitName !=null and limitValue !=null and limitName !='' and limitValue !=''">
             WHERE ${limitName}=#{limitValue}
         </if>
     </select>
@@ -25,8 +25,11 @@
         <if test="limitName !=null and limitValue !=null">
             WHERE ${limitName}=#{limitValue}
         </if>
-        <if test="name == 'feedback'">
+        <if test="name == 'feedback'" >
             order by date desc
+        </if>
+        <if test="name == 'visited_info'" >
+            order by id desc
         </if>
         limit #{offset}, #{pageSize}
     </select>

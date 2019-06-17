@@ -170,7 +170,7 @@ public class MainController {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(cookieName)) {
-                    LogInfo.logger.info("用户存在!Ip:"+request.getRemoteAddr());
+                    LogInfo.logger.info("游客存在!Ip:"+request.getRemoteAddr());
                     nowNum = Integer.parseInt(cookie.getValue());
                     isNewUser = false;
                     //拿出当天访问量人数
@@ -186,7 +186,7 @@ public class MainController {
         }
         //新用户
         if (isNewUser) {
-            LogInfo.logger.info("新用户!Ip:"+request.getRemoteAddr());
+            LogInfo.logger.info("新游客!Ip:"+request.getRemoteAddr());
             VisitedInfo visitedInfo = new VisitedInfo();
             visitedInfo.setIp(request.getRemoteAddr());
             visitedInfo.setPort(request.getRemotePort());

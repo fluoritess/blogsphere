@@ -10,6 +10,6 @@ import xin.dztyh.personal.util.IpAddressUtils;
  */
 public class IpTest {
     public static void main(String[] args) {
-        System.out.println(IpAddressUtils.getAddress("202.115.80.214"));
+        System.out.println(IpAddressUtils.getAddress("0:0:0:5:0:0:0:1"));
     }
 }

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class IpAddressUtils {
             //设置连接超时时间
             con.setConnectTimeout(2000);
             //设置数据读取超时时间
-            con.setReadTimeout(2000);
+            con.setReadTimeout(4000);
             //是否打开输入流
             con.setDoInput(true);
             //提交方法
@@ -52,10 +53,13 @@ public class IpAddressUtils {
             return buffer.toString();
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            System.out.println("网络连接失败...");
+            LogInfo.logger.error("网络连接失败！");
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+            LogInfo.logger.error("连接超时！");
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("创建连接实例失败...");
+            LogInfo.logger.error("创建连接实例失败！");
         } finally {
             if (con != null) {
                 con.disconnect();
@@ -68,9 +72,21 @@ public class IpAddressUtils {
     public static String getAddress(String ip) {
         String urlStr = "http://apidata.chinaz.com/CallAPI/ip?key=15788f56cd4d43b4ac5cda3162b26d9a&ip=";
         String encoding = "utf-8";
+        if (RegexUtil.isIPv6Address(ip)){
+            if (ip.equals("0:0:0:0:0:0:0:1")){
+                LogInfo.logger.info("IPv6内网地址:"+ip);
+                return "IPv6内网地址";
+            }else {
+                LogInfo.logger.info("IPv6地址:"+ip);
+                return "IPv6地址";
+            }
+        }else if (!RegexUtil.isIPv4Address(ip)){
+            LogInfo.logger.error("错误Ip地址:"+ip);
+            return "错误地址";
+        }
         if (RegexUtil.checkInnerIp(ip)) {
-            LogInfo.logger.info("内网地址");
-            return "内网地址";
+            LogInfo.logger.info("IPv4内网地址:"+ip);
+            return "IPv4内网地址";
         }
         urlStr = urlStr + ip;
         String returnStr = IpAddressUtils.getResult(urlStr, encoding);
@@ -106,7 +122,7 @@ public class IpAddressUtils {
                 LogInfo.logger.info(returnStr);
                 return stringBuffer.toString();
             } else {
-                LogInfo.logger.error("Ip地址："+ip+"错误！");
+                LogInfo.logger.error("Ip地址：" + ip + "错误！");
                 return "错误地址";
             }
         }
