@@ -4,7 +4,7 @@ var pageSize = 5;
 $(function () {
     $('#search_value').val("");
     $('#search_type').val("");
-    getTableInfo(page,pageSize);
+    getTableInfo(page, pageSize);
 });
 
 //添加翻页前面的两个按钮
@@ -21,7 +21,7 @@ function addTarget() {
 function pageSizeChange() {
     var webPageSize = $('#webPageSize').find('option:selected').val();
     pageSize = webPageSize;
-    getTableInfo(page,pageSize);
+    getTableInfo(page, pageSize);
 }
 
 //切换页面
@@ -35,15 +35,16 @@ $(function () {
             $('#chart_info').empty();
             $('#data_table').removeAttr("hidden");
             $('#all_num').removeAttr("hidden");
-            $('#search_info').attr("onclick","searchInfo()");
-            $('#webPageSize').attr("onchange","pageSizeChange()");
+            $('#search_info').attr("onclick", "searchInfo()");
+            $('#webPageSize').attr("onchange", "pageSizeChange()");
             getTableInfo(page, pageSize);
         } else if ($this.html() === "访问量统计") {
             $('#paging_foot').empty();
-            $('#data_table').attr("hidden","hidden");
-            $('#all_num').attr("hidden","hidden");
-            $('#search_info').attr("onclick",false);
-            $('#webPageSize').attr("onchange",false);
+            $('#data_table').attr("hidden", "hidden");
+            $('#all_num').attr("hidden", "hidden");
+            $('#search_info').attr("onclick", false);
+            $('#webPageSize').attr("onchange", false);
+            getChartInfo();
         }
     });
 });
@@ -52,11 +53,11 @@ $(function () {
 function searchInfo() {
     var searchName = $('#search_type').find('option:selected').val();
     var searchValue = $('#search_value').val();
-    getTableInfo(page,pageSize, searchName, searchValue);
+    getTableInfo(page, pageSize, searchName, searchValue);
 }
 
 //获取表格信息
-function getTableInfo(page,pageSize, searchName, searchValue) {
+function getTableInfo(page, pageSize, searchName, searchValue) {
     var fd = new FormData();
     fd.append("nowPage", page);
     if (typeof searchValue !== "undefined" && typeof searchName !== "undefined" && searchValue !== "" && searchName !== "") {
@@ -77,7 +78,7 @@ function getTableInfo(page,pageSize, searchName, searchValue) {
             type: "post",
             success: function (result) {
                 if (result) {
-                    $('#all_num').html("总共"+result.data.allDataNum+"条");
+                    $('#all_num').html("总共" + result.data.allDataNum + "条");
                     $('#data_table tbody').empty();
                     $('#table_checkbox').remove();
                     // console.log(result.data[0]);
@@ -160,5 +161,58 @@ function setPage(nowPage, pageSize, totalPages, searchName, searchValue) {
             }
         }
     })
+}
+
+function getChartInfo() {
+    $.ajax({
+        url: '/index/info/getDayVisitedNum',
+        dataType: "json",
+        success: function (result) {
+            var visitedNum=[];
+            var visitedDay=[];
+            for(var i=0;i<result.data.length;i++){
+                visitedNum.push(result.data[i].num);
+                visitedDay.push(transformDate(result.data[i].date).toString().slice(0,-8));
+            }
+            $('#chart_info').highcharts({
+                chart: {
+                    type: 'line'                          //指定图表的类型，默认是折线图（line）
+                },
+                title: {
+                    text: '访问量'                 // 标题
+                },
+                xAxis: {
+                    categories:visitedDay,
+                    title: {
+                        text: '日期'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: '访问量'                // y 轴标题
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            // 开启数据标签
+                            enabled: true
+                        }
+                    }
+                },
+                series: [{                              // 数据列
+                    name: '日均访问量',                        // 数据列名
+                    data: visitedNum                     // 数据
+                }],
+                credits: {
+                    text: 'dztyh.xin',
+                    href: 'http://www.dztyh.xin'
+                }
+            })
+        },
+        error: function () {
+            console.log("error")
+        }
+    });
 }
 

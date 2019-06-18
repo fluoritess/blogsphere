@@ -4,9 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xin.dztyh.personal.dao.FeedbackMapper;
 import xin.dztyh.personal.dao.UtilMapper;
+import xin.dztyh.personal.dao.VisitedDayInfoMapper;
 import xin.dztyh.personal.pojo.Feedback;
+import xin.dztyh.personal.pojo.VisitedDayInfo;
+import xin.dztyh.personal.pojo.VisitedDayInfoExample;
 import xin.dztyh.personal.service.InfoService;
 import xin.dztyh.personal.util.PagingUtils;
+
+import java.util.List;
 
 /**
  * @author tyh
@@ -22,6 +27,9 @@ public class InfoServiceImpl implements InfoService {
 
     @Autowired
     FeedbackMapper feedbackMapper;
+
+    @Autowired
+    VisitedDayInfoMapper visitedDayInfoMapper;
 
     @Override
     public Integer getCount(String tableName, String limitName, String limitValue,String searchName, String searchValue) {
@@ -40,5 +48,12 @@ public class InfoServiceImpl implements InfoService {
         feedback.setIsRead(1);
         feedback.setId(id);
         return feedbackMapper.updateByPrimaryKeySelective(feedback) != 0;
+    }
+
+    @Override
+    public List<VisitedDayInfo> getDayVisitedNum() {
+        VisitedDayInfoExample visitedDayInfoExample=new VisitedDayInfoExample();
+        VisitedDayInfoExample.Criteria criteria=visitedDayInfoExample.createCriteria();
+        return visitedDayInfoMapper.selectByExample(visitedDayInfoExample);
     }
 }

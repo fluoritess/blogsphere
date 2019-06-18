@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xin.dztyh.personal.SpringAop.ArchivesLog;
+import xin.dztyh.personal.pojo.VisitedDayInfo;
 import xin.dztyh.personal.service.InfoService;
 import xin.dztyh.personal.util.PagingUtils;
 import xin.dztyh.personal.util.R;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -91,4 +93,17 @@ public class InfoController {
         paging=infoService.getPagingInfo(paging,"visited_info",null,null,searchName,searchValue);
         return R.ok().put("data",paging);
     }
+
+    /**
+     * 获取近日访问量信息
+     * @return
+     */
+    @ArchivesLog(operationName = "获取[近日访问量信息]", operationType = "获取信息")
+    @ResponseBody
+    @RequestMapping("/getDayVisitedNum")
+    public Map<String ,Object> getDayVisitedNum(){
+        List<VisitedDayInfo> list=infoService.getDayVisitedNum();
+        return R.ok().put("data",list);
+    }
+
 }

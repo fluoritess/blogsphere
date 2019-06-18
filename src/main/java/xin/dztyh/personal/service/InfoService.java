@@ -1,6 +1,9 @@
 package xin.dztyh.personal.service;
 
+import xin.dztyh.personal.pojo.VisitedDayInfo;
 import xin.dztyh.personal.util.PagingUtils;
+
+import java.util.List;
 
 /**
  * @author tyh
@@ -15,5 +18,7 @@ public interface InfoService {
     PagingUtils getPagingInfo(PagingUtils paging, String tableName, String limitName, String limitValue,String searchName, String searchValue);
 
     boolean updateFeedbackInfoType(int id);
+
+    List<VisitedDayInfo> getDayVisitedNum();
 
 }
