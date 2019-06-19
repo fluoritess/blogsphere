@@ -10,6 +10,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author tyh
@@ -70,31 +71,30 @@ public class MainServiceImpl implements MainService {
 
     @Override
     public VisitedDayInfo getVisitedDayInfo(String nowDay) {
-        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-        ParsePosition pos = new ParsePosition(0);
-        Date nowDayDate=df.parse(nowDay,pos);
-        VisitedDayInfoExample visitedDayInfoExample=new VisitedDayInfoExample();
-        VisitedDayInfoExample.Criteria criteria=visitedDayInfoExample.createCriteria();
-        criteria.andDateEqualTo(nowDayDate);
-        List<VisitedDayInfo> infos=visitedDayInfoMapper.selectByExample(visitedDayInfoExample);
-        if(infos.size()!=0){
-            return infos.get(0);
+        List<Map<String, Object>> list = utilMapper.selectPaging("visited_day_info", 0, 5, null, null, "date", nowDay);
+        if (list.size() != 0) {
+            VisitedDayInfo visitedDayInfo = new VisitedDayInfo();
+            visitedDayInfo.setId(Integer.parseInt(String.valueOf(list.get(0).get("id"))));
+            visitedDayInfo.setNum(Integer.parseInt(String.valueOf(list.get(0).get("num"))));
+            visitedDayInfo.setDate((Date) list.get(0).get("date"));
+            return visitedDayInfo;
         }
         return null;
     }
 
     @Override
     public Integer getVisitedAllNum() {
-        return utilMapper.selectCount("visited_info",null,null,null,null);
+        return Integer.parseInt(String.valueOf(utilMapper.selectPaging("visited_info",
+                0, 1, null, null, null, null).get(0).get("id")));
     }
 
     @Override
     public boolean addVisitedDayInfo(VisitedDayInfo visitedDayInfo) {
-        return visitedDayInfoMapper.insertSelective(visitedDayInfo)!=0;
+        return visitedDayInfoMapper.insertSelective(visitedDayInfo) != 0;
     }
 
     @Override
     public boolean updateVisitedDayInfo(VisitedDayInfo visitedDayInfo) {
-        return visitedDayInfoMapper.updateByPrimaryKeySelective(visitedDayInfo)!=0;
+        return visitedDayInfoMapper.updateByPrimaryKeySelective(visitedDayInfo) != 0;
     }
 }

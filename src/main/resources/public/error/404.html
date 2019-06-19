@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh_CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>页面丢了.</title>
+    <link rel="stylesheet" media="screen" href="./css/error.css">
+
+    <script language="JavaScript">
+        function dosearch() {
+            var sf = document.searchform;
+            var submitto = sf.sengine.value + escape(sf.searchterms.value);
+            window.location.href = submitto;
+            return false;
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="header">
+    <img src="./img/head.jpg" style="width:50px; border-radius: 50%;margin-top:2px;" />
+    <span style="position:absolute;padding-left:10px;">
+            <a href="http://www.dztyh.xin/" style="color:white;text-decoration:none;"> dztyh.xin</a>
+        </span>
+</div>
+
+<p class="error">404</p>
+
+<div class="content">
+    <h2>页面被你丢了</h2>
+
+    <p class="text">
+        呃... 怎么说呢，由于某种不可描述的原因，他不想把内容给你看，等后面心情好点可能就可以看到了，耐心等待一段时间吧。
+    <form name="searchform" onSubmit="return dosearch();">
+        <input type="hidden" name="sengine" value="http://www.baidu.com/baidu?wd=" />
+        <input type="text" name="searchterms" class="inputform">
+        <input type="submit" name="SearchSubmit" value="搜索" class="button">
+    </form>
+    </p>
+
+    <p class="links">
+        <a href="http://dztyh.xin/">主页</a>
+        <a href="http://blog.csdn.net/tyhlovetyh">博客</a>
+    </p>
+</div>
+
+</body>
+
+</html>

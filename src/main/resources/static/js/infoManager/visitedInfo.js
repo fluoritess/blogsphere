@@ -177,6 +177,7 @@ function getChartInfo(type) {
         success: function (result) {
             var visitedNum=[];
             var visitedDay=[];
+            var dataName="日均访问量";
             for(var i=result.data.length-1;i>=0;i--){
                 visitedNum.push(result.data[i].num);
                 if (type>60){
@@ -184,6 +185,9 @@ function getChartInfo(type) {
                 } else {
                     visitedDay.push(transformDate(result.data[i].date).toString().slice(0,-8));
                 }
+            }
+            if (type>60){
+                dataName="月均访问量";
             }
             $('#chart_info').highcharts({
                 chart: {
@@ -260,7 +264,7 @@ function getChartInfo(type) {
                     }
                 },
                 series: [{                              // 数据列
-                    name: '日均访问量',                        // 数据列名
+                    name: dataName,                        // 数据列名
                     data: visitedNum                     // 数据
                 }],
                 credits: {

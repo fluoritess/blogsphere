@@ -106,7 +106,6 @@ public class UploadUtils {
             //写入文件
             String absolutePath=fileDir.getAbsolutePath().replaceAll("\\\\","/");
             LogInfo.logger.info("绝对路径:"+absolutePath);
-            System.out.println(absolutePath);
             File newFile = new File(absolutePath + File.separator + newFileName);
             file.transferTo(newFile);
             LogInfo.logger.info(LogInfo.getTime() + "文件" + newFile.getAbsolutePath() + "存入成功！");

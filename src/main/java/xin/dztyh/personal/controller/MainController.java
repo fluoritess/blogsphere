@@ -14,10 +14,7 @@ import xin.dztyh.personal.SpringAop.ArchivesLog;
 import xin.dztyh.personal.pojo.*;
 import xin.dztyh.personal.service.MainService;
 import xin.dztyh.personal.service.ManagerService;
-import xin.dztyh.personal.util.IpAddressUtils;
-import xin.dztyh.personal.util.LogInfo;
-import xin.dztyh.personal.util.R;
-import xin.dztyh.personal.util.ShiroUtils;
+import xin.dztyh.personal.util.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -132,7 +129,7 @@ public class MainController {
         }
         try {
             Subject subject = ShiroUtils.getSubject();
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            UsernamePasswordToken token = new UsernamePasswordToken(username, EncryptUtil.MD5ReEncrpt(password));
             subject.login(token);
         } catch (UnknownAccountException e) {
             return R.error(e.getMessage());
@@ -163,6 +160,7 @@ public class MainController {
         int allNum = 0, nowNum = 0, dayNum = 0;
         //查询今日访问人数
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String nowDay = df.format(new Date());
         VisitedDayInfo visitedDayInfo = mainService.getVisitedDayInfo(nowDay);
         //查找cookie
@@ -215,8 +213,9 @@ public class MainController {
                 //当前用户为当天第一人
                 visitedDayInfo=new VisitedDayInfo();
                 visitedDayInfo.setNum(1);
+                nowDay=nowDay+" 16:00:00";
                 ParsePosition pos = new ParsePosition(0);
-                visitedDayInfo.setDate(df.parse(nowDay,pos));
+                visitedDayInfo.setDate(df2.parse(nowDay,pos));
                 if (mainService.addVisitedDayInfo(visitedDayInfo)){
                     dayNum=visitedDayInfo.getNum();
                 }

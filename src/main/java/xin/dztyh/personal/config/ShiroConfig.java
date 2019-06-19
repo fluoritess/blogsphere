@@ -68,6 +68,8 @@ public class ShiroConfig {
         filterUrl.put("/login","anon");
         filterUrl.put("/captcha.jpg","anon");
         filterUrl.put("/loginOut","logout");
+        filterUrl.put("/CSS/style404.css","anon");
+        filterUrl.put("/images/picture.jpg","anon");
         //设置拦截目录
         filterUrl.put("/html/**","loginFilter,authc");
 //        filterUrl.put("/infoManager/*","loginFilter,authc");

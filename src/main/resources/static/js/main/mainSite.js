@@ -46,6 +46,7 @@ function initMainInfo(mainSiteInfo) {
     $('#main_detail').html(mainSiteInfo.detail);
     $('#resume_url').attr("href", mainSiteInfo.resumeFile);
     $('#personal_pic').attr("src", mainSiteInfo.personalPic);
+    $('#background').attr("src", mainSiteInfo.backgroundUrl);
 }
 
 function initProfessionalInfo(professionalInfo) {
