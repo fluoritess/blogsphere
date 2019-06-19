@@ -220,6 +220,8 @@ function getChartInfo(type) {
                                         var type = prompt("请输入需要查询的数据","");
                                         if (type){
                                             getChartInfo(type);
+                                        } else if(!type){
+                                            return false;
                                         } else {
                                             alert("不能为空");
                                         }
@@ -241,6 +243,15 @@ function getChartInfo(type) {
                     }
                 },
                 plotOptions: {
+                    series: {
+                        cursor: 'pointer',
+                        events: {
+                            click: function (event) {
+                                $('#visited_log')[0].childNodes[0].click();
+                                getTableInfo(page,pageSize,"date",event.point.category);
+                            }
+                        }
+                    },
                     line: {
                         dataLabels: {
                             // 开启数据标签

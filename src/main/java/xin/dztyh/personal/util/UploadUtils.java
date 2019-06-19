@@ -2,6 +2,7 @@ package xin.dztyh.personal.util;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +36,7 @@ public class UploadUtils {
         try {
             //加载配置文件
             Properties properties = new Properties();
-            in = UploadUtils.class.getClassLoader().getResourceAsStream("config/uploadConfig.properties");
+            in = UploadUtils.class.getClassLoader().getResourceAsStream("config/userSetting.properties");
             properties.load(in);
             //得到配置信息
             IMG_PATH_PREFIX = properties.getProperty("IMG_PATH_PREFIX");
@@ -62,8 +63,9 @@ public class UploadUtils {
      * @return
      */
     private static File getDirFile(String pattern) {
-
+        HttpServletRequest request=ServletUtil.getRequest();
         String fileDirPath = "personal/src/main/resources/static/";
+//        String fileDirPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
         // 构建上传文件的存放 "文件夹" 路径
         if (pattern.equals("img") || pattern.equals("IMG")) {
             fileDirPath = fileDirPath + IMG_PATH_PREFIX;
@@ -102,7 +104,10 @@ public class UploadUtils {
         File fileDir = UploadUtils.getDirFile(extendsName);
         try {
             //写入文件
-            File newFile = new File(fileDir.getAbsolutePath() + File.separator + newFileName);
+            String absolutePath=fileDir.getAbsolutePath().replaceAll("\\\\","/");
+            LogInfo.logger.info("绝对路径:"+absolutePath);
+            System.out.println(absolutePath);
+            File newFile = new File(absolutePath + File.separator + newFileName);
             file.transferTo(newFile);
             LogInfo.logger.info(LogInfo.getTime() + "文件" + newFile.getAbsolutePath() + "存入成功！");
             if (extendsName.equals("IMG")) {
@@ -114,6 +119,7 @@ public class UploadUtils {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            LogInfo.logger.error("存入图片失败！文件名:"+newFileName);
             return null;
         }
 //        return null;
@@ -127,7 +133,8 @@ public class UploadUtils {
      */
     public static boolean deleteFile(String fileUrl) {
         if (fileUrl != null) {
-            String fileAbsolutePath = UploadUtils.getDirFile("").getAbsolutePath() + "/" + fileUrl;
+            String absolutePath=UploadUtils.getDirFile("").getAbsolutePath().replaceAll("\\\\","/");
+            String fileAbsolutePath = absolutePath + "/" + fileUrl;
             File file = new File(fileAbsolutePath);
             if (file.exists() && file.isFile()) {
                 if (file.delete()) {

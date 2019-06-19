@@ -12,6 +12,7 @@ import xin.dztyh.personal.service.InfoService;
 import xin.dztyh.personal.util.PagingUtils;
 import xin.dztyh.personal.util.R;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -102,7 +103,7 @@ public class InfoController {
     @ArchivesLog(operationName = "获取[近日访问量信息]", operationType = "获取信息")
     @ResponseBody
     @RequestMapping("/getDayVisitedNum")
-    public Map<String ,Object> getDayVisitedNum(@RequestBody Map<String,Object> map){
+    public Map<String ,Object> getDayVisitedNum(@RequestBody Map<String,Object> map, HttpServletRequest request){
         Integer typeNum=Integer.parseInt(String.valueOf(map.get("type")));
         PagingUtils pagingUtils=new PagingUtils(0,typeNum);
         List<?> list=infoService.getPagingInfo(pagingUtils,"visited_day_info",null,null,null,null).getList();
