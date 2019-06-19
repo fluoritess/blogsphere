@@ -163,23 +163,71 @@ function setPage(nowPage, pageSize, totalPages, searchName, searchValue) {
     })
 }
 
-function getChartInfo() {
+function getChartInfo(type) {
+    if (typeof type==="undefined") {
+        type=7;
+    }
+    var data={"type":type};
     $.ajax({
+        data:JSON.stringify(data),
+        contentType: "application/json",
         url: '/index/info/getDayVisitedNum',
         dataType: "json",
+        type: "post",
         success: function (result) {
             var visitedNum=[];
             var visitedDay=[];
-            for(var i=0;i<result.data.length;i++){
+            for(var i=result.data.length-1;i>=0;i--){
                 visitedNum.push(result.data[i].num);
-                visitedDay.push(transformDate(result.data[i].date).toString().slice(0,-8));
+                if (type>60){
+                    visitedDay.push(transformDate(result.data[i].date).toString().slice(0,-12));
+                } else {
+                    visitedDay.push(transformDate(result.data[i].date).toString().slice(0,-8));
+                }
             }
             $('#chart_info').highcharts({
                 chart: {
                     type: 'line'                          //指定图表的类型，默认是折线图（line）
                 },
                 title: {
-                    text: '访问量'                 // 标题
+                    text: '访问量统计'                 // 标题
+                },
+                exporting:{
+                    buttons:{
+                        contextButton:{
+                            menuItems:[
+                                {
+                                    text:"近七日数据",
+                                    onclick:function () {
+                                        getChartInfo(7);
+                                    }
+                                },
+                                {
+                                    text:"近一个月数据",
+                                    onclick:function () {
+                                        getChartInfo(30);
+                                    }
+                                },
+                                {
+                                    text:"近一年数据",
+                                    onclick:function () {
+                                        getChartInfo(365);
+                                    }
+                                },
+                                {
+                                    text:"自定义查询数据",
+                                    onclick:function () {
+                                        var type = prompt("请输入需要查询的数据","");
+                                        if (type){
+                                            getChartInfo(type);
+                                        } else {
+                                            alert("不能为空");
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
                 },
                 xAxis: {
                     categories:visitedDay,
@@ -208,6 +256,7 @@ function getChartInfo() {
                     text: 'dztyh.xin',
                     href: 'http://www.dztyh.xin'
                 }
+
             })
         },
         error: function () {

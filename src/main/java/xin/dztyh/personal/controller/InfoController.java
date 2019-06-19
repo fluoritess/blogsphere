@@ -12,8 +12,9 @@ import xin.dztyh.personal.service.InfoService;
 import xin.dztyh.personal.util.PagingUtils;
 import xin.dztyh.personal.util.R;
 
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author tyh
@@ -101,8 +102,50 @@ public class InfoController {
     @ArchivesLog(operationName = "获取[近日访问量信息]", operationType = "获取信息")
     @ResponseBody
     @RequestMapping("/getDayVisitedNum")
-    public Map<String ,Object> getDayVisitedNum(){
-        List<VisitedDayInfo> list=infoService.getDayVisitedNum();
+    public Map<String ,Object> getDayVisitedNum(@RequestBody Map<String,Object> map){
+        Integer typeNum=Integer.parseInt(String.valueOf(map.get("type")));
+        PagingUtils pagingUtils=new PagingUtils(0,typeNum);
+        List<?> list=infoService.getPagingInfo(pagingUtils,"visited_day_info",null,null,null,null).getList();
+        List<LinkedHashMap<String,Object>> dayInfos=(List<LinkedHashMap<String,Object>>)list;
+        if (typeNum>60){
+            Map<String,Integer> dayData=new LinkedHashMap<>();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
+            //初始化最初的月份和访问量
+            String month=df.format(dayInfos.get(0).get("date"));
+            dayData.put(month,Integer.parseInt(String.valueOf(dayInfos.get(0).get("num"))));
+            for (LinkedHashMap<String,Object> visitedDayInfo:dayInfos){
+                //如果当前月份与之前的月份相同则将map里此月份里的访问量加上今日的访问量
+                if (month.equals(df.format(visitedDayInfo.get("date")))){
+                    dayData.put(month,dayData.get(month)+Integer.parseInt(String.valueOf(visitedDayInfo.get("num"))));
+                }else {
+                    //如果当前的月数与之前的月份不同，则重新初始化月份，并在map里添加访问量
+                    month=df.format(visitedDayInfo.get("date"));
+                    dayData.put(month,Integer.parseInt(String.valueOf(visitedDayInfo.get("num"))));
+                }
+            }
+            List<VisitedDayInfo> newDayData=new ArrayList<>();
+            int i=0;
+            for (Map.Entry<String,Integer> m:dayData.entrySet()){
+                VisitedDayInfo visitedDayInfo=new VisitedDayInfo();
+                visitedDayInfo.setId(i);
+                visitedDayInfo.setNum(m.getValue());
+                try {
+                    visitedDayInfo.setDate(df.parse(m.getKey()));
+                    //当前日期加一天，防止前端转换出错
+                    Calendar cal=Calendar.getInstance();
+                    cal.setTime(visitedDayInfo.getDate());
+                    cal.add(Calendar.DATE,1);
+                    visitedDayInfo.setDate(cal.getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    continue;
+                }
+                newDayData.add(visitedDayInfo);
+                i++;
+            }
+            newDayData.remove(newDayData.size()-1);
+            return R.ok().put("data",newDayData);
+        }
         return R.ok().put("data",list);
     }
 

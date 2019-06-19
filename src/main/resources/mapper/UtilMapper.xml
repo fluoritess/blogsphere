@@ -34,7 +34,7 @@
         <if test="name == 'feedback'" >
             order by date desc
         </if>
-        <if test="name == 'visited_info'" >
+        <if test="name == 'visited_info' or name == 'visited_day_info'" >
             order by id desc
         </if>
         limit #{offset}, #{pageSize}

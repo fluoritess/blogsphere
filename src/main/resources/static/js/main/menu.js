@@ -3,7 +3,7 @@ $(function () {
     var width=$(document).width();
     var web_body=$('#web_body');
     web_body.css("height",height);
-    web_body.css("width",width);
+    // web_body.css("width",width);
     var par=null;
     $("#main-nav>li>a").click(function () {
         $this = $(this);
