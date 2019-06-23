@@ -144,6 +144,13 @@ public class MainController {
         return R.ok();
     }
 
+    /**
+     * 获取当前游客信息，并反馈以往数据
+     * @param map
+     * @param request
+     * @param response
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/getVisitedInfo")
     public Map<String, Object> getVisitedInfo(@RequestBody Map<String, Object> map,
@@ -160,7 +167,6 @@ public class MainController {
         int allNum = 0, nowNum = 0, dayNum = 0;
         //查询今日访问人数
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String nowDay = df.format(new Date());
         VisitedDayInfo visitedDayInfo = mainService.getVisitedDayInfo(nowDay);
         //查找cookie
@@ -213,18 +219,27 @@ public class MainController {
                 //当前用户为当天第一人
                 visitedDayInfo=new VisitedDayInfo();
                 visitedDayInfo.setNum(1);
-                nowDay=nowDay+" 16:00:00";
                 ParsePosition pos = new ParsePosition(0);
-                visitedDayInfo.setDate(df2.parse(nowDay,pos));
+                visitedDayInfo.setDate(df.parse(nowDay,pos));
                 if (mainService.addVisitedDayInfo(visitedDayInfo)){
                     dayNum=visitedDayInfo.getNum();
+                }else {
+                    LogInfo.logger.error("新存入当天访问人数出错！");
                 }
             }else {
                 //取出当前访问人数
                 dayNum=visitedDayInfo.getNum()+1;
                 visitedDayInfo.setNum(visitedDayInfo.getNum()+1);
                 if (!mainService.updateVisitedDayInfo(visitedDayInfo)){
-                    LogInfo.logger.error("存入当天访问人数出错！");
+                    try {
+                        Thread.sleep(1000);
+                        if (!mainService.updateVisitedDayInfo(visitedDayInfo)){
+                            LogInfo.logger.error("存入当天访问人数出错！");
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
         }
@@ -234,6 +249,7 @@ public class MainController {
         data.put("dayNum",dayNum);
         return R.ok().put("data",data);
     }
+
 
 
 }

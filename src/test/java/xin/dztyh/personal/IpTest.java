@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import xin.dztyh.personal.dao.VisitedInfoMapper;
@@ -28,6 +30,7 @@ import java.util.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = PersonalApplication.class)
 @WebAppConfiguration
+@Component
 public class IpTest {
     @Autowired
     VisitedInfoMapper visitedInfoMapper;
@@ -90,9 +93,16 @@ public class IpTest {
 //        System.out.println(dayNumList);
 //        System.out.println(day.toString());
     }
-    public static void main(String[] args) {
+    @Test
+    public void testIp() {
 
         System.out.println(IpAddressUtils.getAddress("0:0:0:5:0:0:0:1"));
+    }
+
+    @Test
+    @Scheduled(fixedRate = 2000)
+    public void testTasks(){
+        System.out.println("定时器");
     }
 
 

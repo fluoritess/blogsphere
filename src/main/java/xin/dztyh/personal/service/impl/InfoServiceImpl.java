@@ -11,6 +11,7 @@ import xin.dztyh.personal.pojo.VisitedDayInfoExample;
 import xin.dztyh.personal.service.InfoService;
 import xin.dztyh.personal.util.PagingUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,5 +56,18 @@ public class InfoServiceImpl implements InfoService {
         VisitedDayInfoExample visitedDayInfoExample=new VisitedDayInfoExample();
         VisitedDayInfoExample.Criteria criteria=visitedDayInfoExample.createCriteria();
         return visitedDayInfoMapper.selectByExample(visitedDayInfoExample);
+    }
+
+    @Override
+    public List<VisitedDayInfo> getDayVisitedByDate(Date date) {
+        VisitedDayInfoExample visitedDayInfoExample=new VisitedDayInfoExample();
+        VisitedDayInfoExample.Criteria criteria=visitedDayInfoExample.createCriteria();
+        criteria.andDateEqualTo(date);
+        return visitedDayInfoMapper.selectByExample(visitedDayInfoExample);
+    }
+
+    @Override
+    public boolean deleteDayVisitedById(Integer id) {
+        return visitedDayInfoMapper.deleteByPrimaryKey(id) != 0;
     }
 }

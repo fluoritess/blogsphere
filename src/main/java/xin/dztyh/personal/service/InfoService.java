@@ -3,6 +3,7 @@ package xin.dztyh.personal.service;
 import xin.dztyh.personal.pojo.VisitedDayInfo;
 import xin.dztyh.personal.util.PagingUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,5 +21,9 @@ public interface InfoService {
     boolean updateFeedbackInfoType(int id);
 
     List<VisitedDayInfo> getDayVisitedNum();
+
+    List<VisitedDayInfo> getDayVisitedByDate(Date date);
+
+    boolean deleteDayVisitedById(Integer id);
 
 }
