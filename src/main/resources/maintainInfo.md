@@ -6,6 +6,11 @@
 * 加入markdown在线编辑器
 * 加入当前系统环境识别，需要手动配置配置文件
 * 加入系统日志功能
+* 加入markdown在线编辑器上传图片功能
+
+#### 待更新
+* markdown编辑器API开放
+* markdown上传图片中的历史文件删除问题
 
 &nbsp;
 ------------
@@ -20,3 +25,5 @@
 * 维护日志显示与修改
 * markdown编辑器API打包和下载
 * markdown在线编辑器图片上传
+
+![fdsdfsd ](http://localhost:8080/index/upload/img/2019-03-27 11-01-53 的屏幕截图788626548d9b3ae92b97.png "fdsfsd ")

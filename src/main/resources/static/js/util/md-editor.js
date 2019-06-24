@@ -2,7 +2,10 @@ var testEditor;
 var fileNameStr=GetQueryString("fileName");
 var url=GetQueryString("url");
 $(function () {
+    var saveFile=$("#saveFile");
     if(url!==null){
+        saveFile.attr("onclick","saveMarkdown()");
+        saveFile.html("保存文档");
         var sendData={};
         if (url==="maintain_log"){
             sendData['url']="maintain_log";
@@ -22,13 +25,19 @@ $(function () {
                 alert('请求出错');
             }
         });
+    }else {
+        saveFile.attr("onclick","choiceFileType()");
+        saveFile.html("导出文档");
     }
     testEditor = editormd("my-editormd", {
         width: "95%",
         height: 700,
         syncScrolling: "single",
         path: "../../plugins/editor_md/lib/",
-        saveHTMLToTextarea: true
+        saveHTMLToTextarea: true,
+        imageUpload : true,
+        imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        imageUploadURL : "/index/util/uploadImage",//注意你后端的上传图片服务地址
     });
 });
 
@@ -51,4 +60,8 @@ function saveMarkdown() {
             alert('请求出错');
         }
     });
+}
+
+function choiceFileType() {
+    $('#addUserModal').modal('show');
 }

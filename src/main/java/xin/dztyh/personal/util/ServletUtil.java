@@ -22,4 +22,13 @@ public class ServletUtil {
         return request;
     }
 
+    /**
+     * 获取服务器访问地址  http://localhost:8080/项目名称/
+     * @return
+     */
+    public static String getBasePath(){
+        HttpServletRequest request=ServletUtil.getRequest();
+        return request.getScheme()+"://"+request.getServerName()+":"+ request.getServerPort()+request.getContextPath()+"/";
+    }
+
 }

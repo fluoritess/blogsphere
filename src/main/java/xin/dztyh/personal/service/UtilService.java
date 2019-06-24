@@ -1,5 +1,7 @@
 package xin.dztyh.personal.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * @author tyh
  * @Package xin.dztyh.personal.service
@@ -11,5 +13,7 @@ public interface UtilService {
     boolean updateMaintainInfo(String content);
 
     String getMaintainInfo();
+
+    String uploadImage(MultipartFile image);
 
 }

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Markdown编辑器</title>
+    <script src="../../js/jquery-3.4.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
     <link rel="stylesheet" href="../../plugins/editor_md/examples/css/style.css">
     <link rel="stylesheet" href="../../css/bootstrap-3.3.7.min.css">
     <link rel="stylesheet" href="../../plugins/editor_md/css/editormd.css">
@@ -14,7 +16,8 @@
     </header>
     <form method="post" action="#" id="form_data">
         <div style="width: 90%;margin: auto;">
-            <button style="margin: 1rem;" class="btn btn-success pull-right" type="button" onclick="saveMarkdown()">保存文档
+            <!--onclick="saveMarkdown()"-->
+            <button style="margin: 1rem;" class="btn btn-success pull-right" type="button"  id="saveFile">保存文档
             </button>
         </div>
         <div id="my-editormd">
@@ -25,7 +28,30 @@
         </div>
     </form>
 </div>
-<script src="../../js/jquery-3.4.1.min.js"></script>
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" style="margin-top: 200px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    选择导出格式
+                </h4>
+            </div>
+            <div class="modal-body" style="height: 120px;line-height: 80px;">
+                <button type="button" class="btn btn-primary" style="width: 120px;">
+                    Html格式
+                </button>
+                <button type="button" class="btn btn-primary" style="margin-left: 80px;width: 120px;">
+                    Markdown格式
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 <script src="../../plugins/editor_md/editormd.min.js"></script>
 <script src="../../js/util/util.js"></script>
 <script src="../../js/util/md-editor.js"></script>
