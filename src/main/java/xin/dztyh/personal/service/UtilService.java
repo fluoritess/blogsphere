@@ -10,4 +10,6 @@ public interface UtilService {
 
     boolean updateMaintainInfo(String content);
 
+    String getMaintainInfo();
+
 }

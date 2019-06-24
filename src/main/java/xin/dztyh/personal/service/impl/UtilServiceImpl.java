@@ -2,6 +2,7 @@ package xin.dztyh.personal.service.impl;
 
 import org.springframework.stereotype.Service;
 import xin.dztyh.personal.service.UtilService;
+import xin.dztyh.personal.util.FileIOUtils;
 
 /**
  * @author tyh
@@ -14,6 +15,13 @@ public class UtilServiceImpl implements UtilService {
 
     @Override
     public boolean updateMaintainInfo(String content) {
-        return false;
+        String name = FileIOUtils.writeFile("maintainInfo.md", content);
+        return name != null;
+    }
+
+    @Override
+    public String getMaintainInfo() {
+        String value =  FileIOUtils.readFile("maintainInfo.md");
+        return value==null?"":value;
     }
 }

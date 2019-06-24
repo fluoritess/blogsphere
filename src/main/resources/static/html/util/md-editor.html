@@ -12,43 +12,13 @@
     <header style="padding-bottom: 0">
         <h1 style="text-align: center;">Markdown在线编辑器</h1>
     </header>
-    <form method="post" action="#" id="form_data" onsubmit="return saveMarkdown()">
+    <form method="post" action="#" id="form_data">
         <div style="width: 90%;margin: auto;">
             <button style="margin: 1rem;" class="btn btn-success pull-right" type="button" onclick="saveMarkdown()">保存文档
             </button>
         </div>
         <div id="my-editormd">
-            <textarea id="my-editormd-markdown-doc" name="my-editormd-markdown-doc" style="display:none;">
-                [TOC]
-
-                    #MD文档编辑器（爽）
-
-                    #### 可以显示列表项
-
-                    - TeX (Based on KaTeX);
-                    - Emoji;
-                    - Task lists;
-                    - HTML tags decode;
-                    - Flowchart and Sequence Diagram;
-
-                    #### 可以显示目录 directory
-
-                    editor.md/
-                            lib/
-                            css/
-                            scss/
-                            tests/
-                            fonts/
-                            images/
-                            plugins/
-                            examples/
-                            languages/
-                            editormd.js
-                            ...
-                    ####[TOC]文档目录自动生成
-
-                    头部引入 '[TOC]' 参考本文档头部，目录索引自动生成，很方便的！
-            </textarea>
+            <textarea id="my-editormd-markdown-doc" name="my-editormd-markdown-doc" style="display:none;"></textarea>
             <!-- 注意：name属性的值-->
             <textarea id="my-editormd-html-code" name="my-editormd-html-code" style="display:none;"></textarea>
 
@@ -58,37 +28,6 @@
 <script src="../../js/jquery-3.4.1.min.js"></script>
 <script src="../../plugins/editor_md/editormd.min.js"></script>
 <script src="../../js/util/util.js"></script>
-<script type="text/javascript">
-    var testEditor;
-    $(function () {
-        testEditor = editormd("my-editormd", {
-            width: "95%",
-            height: 700,
-            syncScrolling: "single",
-            path: "../../plugins/editor_md/lib/",
-            saveHTMLToTextarea: true
-        });
-    });
-
-    function saveMarkdown() {
-        // 获取Markdown源码
-        var mdstr=testEditor.getMarkdown();
-        var fileNameStr=GetQueryString("fileName");
-        var url=GetQueryString("url");
-        console.log(mdstr);
-        //保存到服务器
-        $.ajax({
-
-            url: "/index/util/saveMarkdown",
-            data: {fileName:fileNameStr,url:url,content:mdstr},
-            type: "post",
-            success: function (data) {
-
-            },error: function () {
-                alert('请求出错');
-            }
-        });
-    }
-</script>
+<script src="../../js/util/md-editor.js"></script>
 </body>
 </html>

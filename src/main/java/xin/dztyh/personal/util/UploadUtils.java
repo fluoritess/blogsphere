@@ -24,6 +24,8 @@ public class UploadUtils {
 
     public static String DEFAULT_PATH_PREFIX;
 
+    private static String SYSTEM;
+
     static {
         initInfo();
     }
@@ -42,9 +44,10 @@ public class UploadUtils {
             IMG_PATH_PREFIX = properties.getProperty("IMG_PATH_PREFIX");
             PDF_PATH_PREFIX = properties.getProperty("PDF_PATH_PREFIX");
             DEFAULT_PATH_PREFIX = properties.getProperty("DEFAULT_PATH_PREFIX");
+            SYSTEM = properties.getProperty("SYSTEM");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("读取信息失败！");
+            System.out.println("读取配置信息失败！");
         } finally {
             if (in != null) {
                 try {
@@ -63,9 +66,18 @@ public class UploadUtils {
      * @return
      */
     private static File getDirFile(String pattern) {
-        HttpServletRequest request=ServletUtil.getRequest();
-        String fileDirPath = "personal/src/main/resources/static/";
-//        String fileDirPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+        String fileDirPath = "";
+        if (SYSTEM.equals("windows")){
+            fileDirPath = "G:/JAVA/IDEA_Workspace/personal/src/main/resources/static/";
+        }else if (SYSTEM.equals("linux")){
+            fileDirPath = "personal/src/main/resources/static/";
+        }else if(SYSTEM.equals("server")){
+            HttpServletRequest request=ServletUtil.getRequest();
+            fileDirPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+        }else {
+            LogInfo.logger.error("当前环境配置文件错误！");
+            return null;
+        }
         // 构建上传文件的存放 "文件夹" 路径
         if (pattern.equals("img") || pattern.equals("IMG")) {
             fileDirPath = fileDirPath + IMG_PATH_PREFIX;

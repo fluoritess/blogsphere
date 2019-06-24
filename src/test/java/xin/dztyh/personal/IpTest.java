@@ -105,5 +105,15 @@ public class IpTest {
         System.out.println("定时器");
     }
 
+    @Test
+    public void stringSplitTest(){
+        String s="dasdsa\ndsadsad\ndsadasdas\n";
+        System.out.println(s);
+        String[] values=s.split("\n");
+        for (String v:values){
+            System.out.println(v);
+        }
+    }
+
 
 }

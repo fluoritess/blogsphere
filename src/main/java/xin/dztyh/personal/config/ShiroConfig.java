@@ -63,13 +63,15 @@ public class ShiroConfig {
         shiroFilter.setFilters(filterMap);
         //设置拦截器放行路径
         Map<String,String> filterUrl=new LinkedHashMap<>();
-        filterUrl.put("/getMainInfo","anon");
-        filterUrl.put("/submitFeedback","anon");
-        filterUrl.put("/login","anon");
-        filterUrl.put("/captcha.jpg","anon");
-        filterUrl.put("/loginOut","logout");
-        filterUrl.put("/CSS/style404.css","anon");
-        filterUrl.put("/images/picture.jpg","anon");
+//        filterUrl.put("/getMainInfo","anon");
+//        filterUrl.put("/submitFeedback","anon");
+//        filterUrl.put("/login","anon");
+//        filterUrl.put("/captcha.jpg","anon");
+//        filterUrl.put("/loginOut","logout");
+//        filterUrl.put("/CSS/style404.css","anon");
+//        filterUrl.put("/images/picture.jpg","anon");
+        filterUrl.put("/util/**","anon");
+        filterUrl.put("/html/util/md-editor.html","anon");
         //设置拦截目录
         filterUrl.put("/html/**","loginFilter,authc");
 //        filterUrl.put("/infoManager/*","loginFilter,authc");

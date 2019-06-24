@@ -1,5 +1,6 @@
 package xin.dztyh.personal.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import java.util.Map;
 @RequestMapping("/util")
 public class UtilController {
 
+    @Autowired
     UtilService utilService;
 
     @ResponseBody
@@ -27,7 +29,23 @@ public class UtilController {
         if (url != null && url.equals("maintain_log")) {
             if (request.getSession().getAttribute("user") == null)
                 return R.error().put("msg", "对不起，您没有权限！");
+            if (utilService.updateMaintainInfo(content)){
+                return R.ok();
+            }else {
+                return R.error().put("msg","保存失败！");
+            }
         }
         return R.ok();
+    }
+
+    @ResponseBody
+    @RequestMapping("/getMarkdown")
+    public Map<String,Object> getMarkdown(String url,HttpServletRequest request){
+        if (url!=null&&url.equals("maintain_log")){
+            if (request.getSession().getAttribute("user") == null)
+                return R.error().put("msg", "对不起，您没有权限！");
+            return R.ok().put("value",utilService.getMaintainInfo());
+        }
+        return R.error();
     }
 }
