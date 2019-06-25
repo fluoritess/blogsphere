@@ -12,7 +12,7 @@ public class IpAddressPool implements Serializable {
 
     private Integer visitedNum;
 
-    private Date modifydate;
+    private Date modifyDate;
 
     private static final long serialVersionUID = 1L;
 
@@ -48,12 +48,12 @@ public class IpAddressPool implements Serializable {
         this.visitedNum = visitedNum;
     }
 
-    public Date getModifydate() {
-        return modifydate;
+    public Date getModifyDate() {
+        return modifyDate;
     }
 
-    public void setModifydate(Date modifydate) {
-        this.modifydate = modifydate;
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class IpAddressPool implements Serializable {
         sb.append(", ip=").append(ip);
         sb.append(", address=").append(address);
         sb.append(", visitedNum=").append(visitedNum);
-        sb.append(", modifydate=").append(modifydate);
+        sb.append(", modifyDate=").append(modifyDate);
         sb.append("]");
         return sb.toString();
     }

@@ -37,7 +37,10 @@
         <if test="name == 'visited_info' or name == 'visited_day_info'" >
             order by id desc
         </if>
-        <if test="offset !=0 and pageSize !=0">
+        <if test="name == 'ip_address_pool'" >
+            order by visited_num desc
+        </if>
+        <if test="offset !=-1 and pageSize !=-1">
         limit #{offset}, #{pageSize}
         </if>
     </select>

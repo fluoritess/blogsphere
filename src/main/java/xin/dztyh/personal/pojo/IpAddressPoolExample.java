@@ -365,63 +365,63 @@ public class IpAddressPoolExample {
             return (Criteria) this;
         }
 
-        public Criteria andModifydateIsNull() {
-            addCriterion("modifyDate is null");
+        public Criteria andModifyDateIsNull() {
+            addCriterion("modify_date is null");
             return (Criteria) this;
         }
 
-        public Criteria andModifydateIsNotNull() {
-            addCriterion("modifyDate is not null");
+        public Criteria andModifyDateIsNotNull() {
+            addCriterion("modify_date is not null");
             return (Criteria) this;
         }
 
-        public Criteria andModifydateEqualTo(Date value) {
-            addCriterion("modifyDate =", value, "modifydate");
+        public Criteria andModifyDateEqualTo(Date value) {
+            addCriterion("modify_date =", value, "modifyDate");
             return (Criteria) this;
         }
 
-        public Criteria andModifydateNotEqualTo(Date value) {
-            addCriterion("modifyDate <>", value, "modifydate");
+        public Criteria andModifyDateNotEqualTo(Date value) {
+            addCriterion("modify_date <>", value, "modifyDate");
             return (Criteria) this;
         }
 
-        public Criteria andModifydateGreaterThan(Date value) {
-            addCriterion("modifyDate >", value, "modifydate");
+        public Criteria andModifyDateGreaterThan(Date value) {
+            addCriterion("modify_date >", value, "modifyDate");
             return (Criteria) this;
         }
 
-        public Criteria andModifydateGreaterThanOrEqualTo(Date value) {
-            addCriterion("modifyDate >=", value, "modifydate");
+        public Criteria andModifyDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("modify_date >=", value, "modifyDate");
             return (Criteria) this;
         }
 
-        public Criteria andModifydateLessThan(Date value) {
-            addCriterion("modifyDate <", value, "modifydate");
+        public Criteria andModifyDateLessThan(Date value) {
+            addCriterion("modify_date <", value, "modifyDate");
             return (Criteria) this;
         }
 
-        public Criteria andModifydateLessThanOrEqualTo(Date value) {
-            addCriterion("modifyDate <=", value, "modifydate");
+        public Criteria andModifyDateLessThanOrEqualTo(Date value) {
+            addCriterion("modify_date <=", value, "modifyDate");
             return (Criteria) this;
         }
 
-        public Criteria andModifydateIn(List<Date> values) {
-            addCriterion("modifyDate in", values, "modifydate");
+        public Criteria andModifyDateIn(List<Date> values) {
+            addCriterion("modify_date in", values, "modifyDate");
             return (Criteria) this;
         }
 
-        public Criteria andModifydateNotIn(List<Date> values) {
-            addCriterion("modifyDate not in", values, "modifydate");
+        public Criteria andModifyDateNotIn(List<Date> values) {
+            addCriterion("modify_date not in", values, "modifyDate");
             return (Criteria) this;
         }
 
-        public Criteria andModifydateBetween(Date value1, Date value2) {
-            addCriterion("modifyDate between", value1, value2, "modifydate");
+        public Criteria andModifyDateBetween(Date value1, Date value2) {
+            addCriterion("modify_date between", value1, value2, "modifyDate");
             return (Criteria) this;
         }
 
-        public Criteria andModifydateNotBetween(Date value1, Date value2) {
-            addCriterion("modifyDate not between", value1, value2, "modifydate");
+        public Criteria andModifyDateNotBetween(Date value1, Date value2) {
+            addCriterion("modify_date not between", value1, value2, "modifyDate");
             return (Criteria) this;
         }
     }

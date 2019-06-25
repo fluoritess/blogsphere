@@ -1,7 +1,6 @@
 package xin.dztyh.personal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +10,6 @@ import xin.dztyh.personal.SpringAop.ArchivesLog;
 import xin.dztyh.personal.pojo.VisitedDayInfo;
 import xin.dztyh.personal.service.InfoService;
 import xin.dztyh.personal.service.MainService;
-import xin.dztyh.personal.util.LogInfo;
 import xin.dztyh.personal.util.PagingUtils;
 import xin.dztyh.personal.util.R;
 
@@ -154,6 +152,27 @@ public class InfoController {
             return R.ok().put("data",newDayData);
         }
         return R.ok().put("data",list);
+    }
+
+    /**
+     * 获取IP连接池信息
+     * @return
+     */
+    @ArchivesLog(operationName = "获取[IP连接池信息]", operationType = "获取信息")
+    @ResponseBody
+    @RequestMapping("/getIpAddressPoolInfo")
+    public Map<String,Object> getIpAddressPoolInfo(@RequestParam(value = "pageSize",required = false) String pageSize,
+                                             @RequestParam(value = "nowPage",required = false) String nowPage,
+                                             @RequestParam(value = "searchName",required = false) String searchName,
+                                             @RequestParam(value = "searchValue",required = false) String searchValue){
+        if ((searchName!=null&&searchName.equals("undefined"))||(searchValue!=null&&searchValue.equals("undefined"))){
+            searchName=null;
+            searchValue=null;
+        }
+        PagingUtils paging=new PagingUtils(nowPage,pageSize);
+        paging.setAllDataNum(infoService.getCount("ip_address_pool",null,null,searchName,searchValue));
+        paging=infoService.getPagingInfo(paging,"ip_address_pool",null,null,searchName,searchValue);
+        return R.ok().put("data",paging);
     }
 
 }

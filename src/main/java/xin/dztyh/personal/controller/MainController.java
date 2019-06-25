@@ -205,7 +205,7 @@ public class MainController {
                     ipAddressPool.setAddress(visitedInfo.getAddress());
                 }
                 ipAddressPool.setVisitedNum(0);
-                ipAddressPool.setModifydate(new Date());
+                ipAddressPool.setModifyDate(new Date());
                 if(mainService.addIpAddressPool(ipAddressPool)){
                     LogInfo.logger.info("Ip地址池更新成功！加入Ip"+visitedInfo.getIp()+",地址为:"+visitedInfo.getAddress());
                 }else {
@@ -217,7 +217,7 @@ public class MainController {
                 //判断地址池里的查询时间是否与当前时间相差一个月
                 Calendar calendar=Calendar.getInstance();
                 long now=calendar.getTimeInMillis();
-                calendar.setTime(ipAddressPool.getModifydate());
+                calendar.setTime(ipAddressPool.getModifyDate());
                 long lastly=calendar.getTimeInMillis();
                 Integer day=1000*60*60*24;
                 long time=day.longValue()*30;
@@ -228,7 +228,7 @@ public class MainController {
                     if (!visitedInfo.getAddress().equals(ipAddressPool.getAddress())){
                         //如果查询出来的ip地址与当前存储的不一样则更新数据库ip地址
                         ipAddressPool.setAddress(visitedInfo.getAddress());
-                        ipAddressPool.setModifydate(new Date());
+                        ipAddressPool.setModifyDate(new Date());
                         if (mainService.UpdateIpAddressPool(ipAddressPool)){
                             LogInfo.logger.info("Ip地址池更新成功！更新Ip"+visitedInfo.getIp()+",地址为:"+visitedInfo.getAddress());
                         }else {

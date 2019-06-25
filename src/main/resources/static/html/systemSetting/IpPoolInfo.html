@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>IP地址池显示</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.3.7.min.css">
+    <link rel="stylesheet" href="../../css/owl.theme.min.css">
+    <link rel="stylesheet" href="../../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../css/font-awesome.min.css" media="screen"/>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/bootstrap-paginator.js"></script>
+    <script src="../../js/highcharts.js"></script>
+    <script src="../../js/exporting.js"></script>
+    <script src="../../js/manager/table.js"></script>
+    <script src="../../js/main/menu.js"></script>
+    <script src="../../js/systemSetting/IpPoolInfo.js"></script>
+    <style type="text/css">
+        .main-info {
+            width: 1400px;
+            margin: 20px auto;
+            border: #b7b7b7 solid 1px;
+            border-radius: 5px;
+            color: rgb(115, 135, 156);
+        }
+
+        .table-info {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .table-info th {
+            text-align: center;
+        }
+
+        .top-button {
+            padding-right: 50px;
+            float: right;
+        }
+
+        .top-button button {
+            margin-left: 5px;
+        }
+
+        .info_type_active {
+            font-weight: bold;
+        }
+
+        .type {
+            display: inline-block;
+            height: 25px;
+            width: 50px;
+            line-height: 25px;
+            border-radius: 2px;
+        }
+
+        .pagination a {
+            cursor: pointer;
+        }
+
+        .panel-footer nav {
+            /*text-align: center;*/
+        }
+
+        #paging_foot {
+            margin: 0 auto;
+            height: 35px;
+            /*width: 600px;*/
+            display: block;
+        }
+
+        .g-pages {
+            /*display: inline-block;*/
+        }
+    </style>
+</head>
+<body>
+<div style="width: 1400px;margin: 0 auto;">
+    <h3 style="color: rgb(115, 135, 156)">IP地址池</h3>
+</div>
+<div class="main-info">
+    <div style="padding: 10px 17px">
+        <div class="panel-body" style="border-bottom:#b4b4b4 2px solid">
+            <h4 style="color:rgb(115, 135, 156);float: left">IP地址池显示
+                <small>&nbsp;访问Ip，地址,访问次数</small>
+            </h4>
+
+            <div class="h4 top-button">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <select id="search_type" class="form-control">
+                            <option selected="selected" value="ip">Ip</option>
+                            <option value="address">地址</option>
+                            <option value="visited_num">访问次数</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <!--<label for="inputPassword2" class="sr-only">Password</label>-->
+                        <input type="text" class="form-control" id="search_value" placeholder="搜索内容">
+                    </div>
+                    <div class="form-group">
+                        <button id="search_info" type="button" class="btn btn-primary btn-sm"
+                                onclick="searchInfo()">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            搜索
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="h5 top-button">
+                <label>
+                    <select id="webPageSize" onchange="pageSizeChange()"
+                            aria-controls="DataTables_Table_0" size="1" name="DataTables_Table_0_length"
+                            class="g-pages form-control">
+                        <option selected="selected" value="5">5条/页</option>
+                        <option value="10">10条/页</option>
+                        <option value="15">15条/页</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <ul class="nav nav-tabs " style="margin-top: 5px;" id="info_type">
+            <li role="presentation" class="active info_type_active" id="visited_log"><a href="#">访问日志</a></li>
+            <span style="float: right;margin-right: 50px;padding: 10px 15px;" id="all_num"></span>
+        </ul>
+        <table class="table table-striped table-bordered table-hover table-info" id="data_table" >
+            <thead>
+            <tr>
+                <th width="60px">#</th>
+                <th width="240px">Ip</th>
+                <th>地址</th>
+                <th width="240px">访问次数</th>
+                <th width="240px">更新时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div id="chart_info"></div>
+        <div class="panel-footer">
+            <nav>
+                <ul class="pagination pagination-sm" id="paging_foot">
+
+                </ul>
+
+            </nav>
+
+        </div><!-- end of panel-footer -->
+    </div>
+</div>
+</body>
+</html>

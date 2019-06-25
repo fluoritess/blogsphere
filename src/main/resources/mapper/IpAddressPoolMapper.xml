@@ -6,7 +6,7 @@
     <result column="ip" jdbcType="VARCHAR" property="ip" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="visited_num" jdbcType="INTEGER" property="visitedNum" />
-    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, ip, address, visited_num, modifyDate
+    id, ip, address, visited_num, modify_date
   </sql>
   <select id="selectByExample" parameterType="xin.dztyh.personal.pojo.IpAddressPoolExample" resultMap="BaseResultMap">
     select
@@ -101,9 +101,9 @@
   </delete>
   <insert id="insert" parameterType="xin.dztyh.personal.pojo.IpAddressPool">
     insert into ip_address_pool (id, ip, address, 
-      visited_num, modifyDate)
+      visited_num, modify_date)
     values (#{id,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{visitedNum,jdbcType=INTEGER}, #{modifydate,jdbcType=TIMESTAMP})
+      #{visitedNum,jdbcType=INTEGER}, #{modifyDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="xin.dztyh.personal.pojo.IpAddressPool">
     insert into ip_address_pool
@@ -120,8 +120,8 @@
       <if test="visitedNum != null">
         visited_num,
       </if>
-      <if test="modifydate != null">
-        modifyDate,
+      <if test="modifyDate != null">
+        modify_date,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -137,8 +137,8 @@
       <if test="visitedNum != null">
         #{visitedNum,jdbcType=INTEGER},
       </if>
-      <if test="modifydate != null">
-        #{modifydate,jdbcType=TIMESTAMP},
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -163,8 +163,8 @@
       <if test="record.visitedNum != null">
         visited_num = #{record.visitedNum,jdbcType=INTEGER},
       </if>
-      <if test="record.modifydate != null">
-        modifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      <if test="record.modifyDate != null">
+        modify_date = #{record.modifyDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -177,7 +177,7 @@
       ip = #{record.ip,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
       visited_num = #{record.visitedNum,jdbcType=INTEGER},
-      modifyDate = #{record.modifydate,jdbcType=TIMESTAMP}
+      modify_date = #{record.modifyDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -194,8 +194,8 @@
       <if test="visitedNum != null">
         visited_num = #{visitedNum,jdbcType=INTEGER},
       </if>
-      <if test="modifydate != null">
-        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      <if test="modifyDate != null">
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -205,7 +205,7 @@
     set ip = #{ip,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       visited_num = #{visitedNum,jdbcType=INTEGER},
-      modifyDate = #{modifydate,jdbcType=TIMESTAMP}
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
