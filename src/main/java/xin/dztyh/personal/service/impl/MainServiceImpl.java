@@ -36,6 +36,9 @@ public class MainServiceImpl implements MainService {
     @Autowired
     UtilMapper utilMapper;
 
+    @Autowired
+    IpAddressPoolMapper ipAddressPoolMapper;
+
     @Override
     public boolean addFeedBack(Feedback feedback) {
         return feedbackMapper.insertSelective(feedback) != 0;
@@ -96,5 +99,27 @@ public class MainServiceImpl implements MainService {
     @Override
     public boolean updateVisitedDayInfo(VisitedDayInfo visitedDayInfo) {
         return visitedDayInfoMapper.updateByPrimaryKeySelective(visitedDayInfo) != 0;
+    }
+
+    @Override
+    public IpAddressPool getIpAddressByPool(String ip) {
+        IpAddressPoolExample ipAddressPoolExample=new IpAddressPoolExample();
+        IpAddressPoolExample.Criteria criteria=ipAddressPoolExample.createCriteria();
+        criteria.andIpEqualTo(ip);
+        List<IpAddressPool> list=ipAddressPoolMapper.selectByExample(ipAddressPoolExample);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean UpdateIpAddressPool(IpAddressPool ipAddressPool) {
+        return ipAddressPoolMapper.updateByPrimaryKeySelective(ipAddressPool)!=0;
+    }
+
+    @Override
+    public boolean addIpAddressPool(IpAddressPool ipAddressPool) {
+        return ipAddressPoolMapper.insertSelective(ipAddressPool)!=0;
     }
 }

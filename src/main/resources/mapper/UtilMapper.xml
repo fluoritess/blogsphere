@@ -37,6 +37,8 @@
         <if test="name == 'visited_info' or name == 'visited_day_info'" >
             order by id desc
         </if>
+        <if test="offset !=0 and pageSize !=0">
         limit #{offset}, #{pageSize}
+        </if>
     </select>
 </mapper>

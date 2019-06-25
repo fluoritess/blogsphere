@@ -1,9 +1,6 @@
 package xin.dztyh.personal.service;
 
-import xin.dztyh.personal.pojo.Feedback;
-import xin.dztyh.personal.pojo.User;
-import xin.dztyh.personal.pojo.VisitedDayInfo;
-import xin.dztyh.personal.pojo.VisitedInfo;
+import xin.dztyh.personal.pojo.*;
 
 /**
  * @author tyh
@@ -28,5 +25,11 @@ public interface MainService {
     boolean addVisitedDayInfo(VisitedDayInfo visitedDayInfo);
 
     boolean updateVisitedDayInfo(VisitedDayInfo visitedDayInfo);
+
+    IpAddressPool getIpAddressByPool(String ip);
+
+    boolean UpdateIpAddressPool(IpAddressPool ipAddressPool);
+
+    boolean addIpAddressPool(IpAddressPool ipAddressPool);
 
 }

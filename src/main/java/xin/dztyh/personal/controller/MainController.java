@@ -28,10 +28,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author tyh
@@ -195,7 +192,55 @@ public class MainController {
             visitedInfo.setIp(request.getRemoteAddr());
             visitedInfo.setPort(request.getRemotePort());
             visitedInfo.setVisitedUrl(url);
-            visitedInfo.setAddress(IpAddressUtils.getAddress(visitedInfo.getIp()));
+            //查询Ip地址池中是否含有此Ip
+            IpAddressPool ipAddressPool=mainService.getIpAddressByPool(visitedInfo.getIp());
+            if (ipAddressPool==null){
+                //如果不含有此IP，则查询ip，并存入Ip地址池
+                visitedInfo.setAddress(IpAddressUtils.getAddress(visitedInfo.getIp()));
+                ipAddressPool=new IpAddressPool();
+                ipAddressPool.setIp(visitedInfo.getIp());
+                if (visitedInfo.getAddress()==null){
+                    ipAddressPool.setAddress("");
+                }else {
+                    ipAddressPool.setAddress(visitedInfo.getAddress());
+                }
+                ipAddressPool.setVisitedNum(0);
+                ipAddressPool.setModifydate(new Date());
+                if(mainService.addIpAddressPool(ipAddressPool)){
+                    LogInfo.logger.info("Ip地址池更新成功！加入Ip"+visitedInfo.getIp()+",地址为:"+visitedInfo.getAddress());
+                }else {
+                    LogInfo.logger.error("Ip地址池更新失败！");
+                }
+            }else {
+                //如果含有此IP
+                visitedInfo.setAddress(ipAddressPool.getAddress());
+                //判断地址池里的查询时间是否与当前时间相差一个月
+                Calendar calendar=Calendar.getInstance();
+                long now=calendar.getTimeInMillis();
+                calendar.setTime(ipAddressPool.getModifydate());
+                long lastly=calendar.getTimeInMillis();
+                Integer day=1000*60*60*24;
+                long time=day.longValue()*30;
+                if (now-lastly>=time||ipAddressPool.getAddress().equals("")
+                        ||ipAddressPool.getAddress().equals("错误地址")){
+                    //如果相差一个月，则重新查询ip地址
+                    visitedInfo.setAddress(IpAddressUtils.getAddress(visitedInfo.getIp()));
+                    if (!visitedInfo.getAddress().equals(ipAddressPool.getAddress())){
+                        //如果查询出来的ip地址与当前存储的不一样则更新数据库ip地址
+                        ipAddressPool.setAddress(visitedInfo.getAddress());
+                        ipAddressPool.setModifydate(new Date());
+                        if (mainService.UpdateIpAddressPool(ipAddressPool)){
+                            LogInfo.logger.info("Ip地址池更新成功！更新Ip"+visitedInfo.getIp()+",地址为:"+visitedInfo.getAddress());
+                        }else {
+                            LogInfo.logger.error("Ip地址池更新失败！");
+                        }
+                    }
+                }else {
+                    //如果没有相差一个月则直接存入ip地址
+                    visitedInfo.setAddress(ipAddressPool.getAddress());
+                    LogInfo.logger.info("Ip地址池取得Ip"+visitedInfo.getIp()+",地址为:"+visitedInfo.getAddress());
+                }
+            }
             visitedInfo.setDate(new Date());
             nowNum = mainService.addVisitedInfo(visitedInfo);
             if (nowNum == 0) {
@@ -249,7 +294,4 @@ public class MainController {
         data.put("dayNum",dayNum);
         return R.ok().put("data",data);
     }
-
-
-
 }
