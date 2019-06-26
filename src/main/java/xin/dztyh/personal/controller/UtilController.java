@@ -1,5 +1,6 @@
 package xin.dztyh.personal.controller;
 
+import com.sun.org.apache.bcel.internal.generic.I2D;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import xin.dztyh.personal.SpringAop.ArchivesLog;
 import xin.dztyh.personal.service.UtilService;
 import xin.dztyh.personal.util.R;
+import xin.dztyh.personal.util.RegexUtil;
 import xin.dztyh.personal.util.ServletUtil;
 import xin.dztyh.personal.util.UploadUtils;
 
@@ -49,6 +51,15 @@ public class UtilController {
                 }
                 session.removeAttribute("imageList");
             }
+            if (session.getAttribute("imageListUsed")!=null){
+                List<String> imageList=(List<String>) session.getAttribute("imageListUsed");
+                for (String imageUrl:imageList){
+                    if (!content.contains(imageUrl)){
+                        UploadUtils.deleteFile("/upload/img/"+imageUrl);
+                    }
+                }
+                session.removeAttribute("imageListUsed");
+            }
             if (utilService.updateMaintainInfo(content)){
                 return R.ok();
             }else {
@@ -66,7 +77,12 @@ public class UtilController {
             HttpSession session=request.getSession();
             if (session.getAttribute("user") == null)
                 return R.error().put("msg", "对不起，您没有权限！");
-            return R.ok().put("value",utilService.getMaintainInfo());
+            String source=utilService.getMaintainInfo();
+            List<String> urls= RegexUtil.getUrlString(source);
+            if (urls.size()>0){
+                request.getSession().setAttribute("imageListUsed",urls);
+            }
+            return R.ok().put("value",source);
         }
         return R.error();
     }

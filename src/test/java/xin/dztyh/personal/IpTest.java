@@ -15,11 +15,15 @@ import xin.dztyh.personal.pojo.VisitedInfoExample;
 import xin.dztyh.personal.service.InfoService;
 import xin.dztyh.personal.service.MainService;
 import xin.dztyh.personal.util.IpAddressUtils;
+import xin.dztyh.personal.util.Patterns;
+import xin.dztyh.personal.util.RegexUtil;
 
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author tyh
@@ -100,7 +104,7 @@ public class IpTest {
     }
 
     @Test
-    @Scheduled(fixedRate = 2000)
+//    @Scheduled(fixedRate = 2000)
     public void testTasks(){
         System.out.println("定时器");
     }
@@ -125,6 +129,29 @@ public class IpTest {
         System.out.println(osArch);
         System.out.println(osVersion);
         System.out.println(props.getProperty("user.home"));
+    }
+
+    @Test
+    public void urlTest(){
+        String regEx = "^(\\/inde\\/upload)";
+        Pattern pattern=Pattern.compile(regEx);
+        String url="http://localhost:8080/index/upload/img/startMenu84879a0c8ce6d29c921c.jpg '";
+//        System.out.println(RegexUtil.checkURL(url));
+        String source="* markdown编辑器API打包和下载\n" +
+                "* markdown在线编辑器图片上传\n" +
+                "![大三的算分的](http://localhost:8080/index/upload/img/startMenu0b48e446373dbefd7638.jpg \"大三的算法的\")\n" +
+                "\n" +
+                "![水电地方费水费](http://localhost:8080/index/upload/img/startMenu1d243a4823b8b3d7d795.jpg \"水电费水电费\")";
+
+//        List<String> urls= RegexUtil.getUrlString(source);
+        List<String> urls=new ArrayList<>();
+        Matcher matcher= Patterns.WEB_URL.matcher(source);
+        while (matcher.find()){
+            urls.add(matcher.group());
+        }
+        for (String urlString:urls){
+            System.out.println(urlString);
+        }
     }
 
 

@@ -1,5 +1,9 @@
 package xin.dztyh.personal.util;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -127,5 +131,29 @@ public class RegexUtil {
         } else {
             return IPV6_COMPRESS_REGEX.matcher(input).matches();
         }
+    }
+
+    /**
+     * 检查是否为url
+     * @param url
+     * @return
+     */
+    public static boolean checkURL(String url){
+        String regEx = "^([hH][tT]{2}[pP]:/*|[hH][tT]{2}[pP][sS]:/*|[fF][tT][pP]:/*)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+(\\?{0,1}(([A-Za-z0-9-~]+\\={0,1})([A-Za-z0-9-~]*)\\&{0,1})*)$";
+        return Pattern.compile(regEx).matcher(url).matches();
+    }
+
+    /**
+     * 提取所有的url字符串
+     * @param source
+     * @return
+     */
+    public static List<String> getUrlString(String source){
+        List<String> urls=new ArrayList<>();
+        Matcher matcher= Patterns.WEB_URL.matcher(source);
+        while (matcher.find()){
+            urls.add(matcher.group(1));
+        }
+        return urls;
     }
 }
