@@ -2,7 +2,6 @@ package xin.dztyh.personal.util;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,8 +71,9 @@ public class UploadUtils {
         }else if (SYSTEM.equals("linux")){
             fileDirPath = "personal/src/main/resources/static/";
         }else if(SYSTEM.equals("server")){
-            HttpServletRequest request=ServletUtil.getRequest();
-            fileDirPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+//            HttpServletRequest request=ServletUtil.getRequest();
+//            fileDirPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+            fileDirPath = "/home/webData/index/";
         }else {
             LogInfo.logger.error("当前环境配置文件错误！");
             return null;

@@ -16,4 +16,6 @@ public interface UtilService {
 
     String uploadImage(MultipartFile image);
 
+    String addMdFile(String content);
+
 }

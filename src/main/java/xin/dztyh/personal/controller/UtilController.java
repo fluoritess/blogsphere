@@ -1,6 +1,5 @@
 package xin.dztyh.personal.controller;
 
-import com.sun.org.apache.bcel.internal.generic.I2D;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,8 +36,8 @@ public class UtilController {
     @ArchivesLog(operationName = "工具类，存储[markdown文档]", operationType = "工具类，更新信息")
     @ResponseBody
     @RequestMapping("/saveMarkdown")
-    public Map<String, Object> saveMarkdown(String content, String fileName, String url, HttpServletRequest request) {
-        if (url != null && url.equals("maintain_log")) {
+    public Map<String, Object> saveMarkdown(String content, String fileName, String url,String fileType, boolean isUser, HttpServletRequest request) {
+        if (isUser&& url.equals("maintain_log")) {
             HttpSession session=request.getSession();
             if (session.getAttribute("user") == null)
                 return R.error().put("msg", "对不起，您没有权限！");
@@ -64,6 +63,22 @@ public class UtilController {
                 return R.ok();
             }else {
                 return R.error().put("msg","保存失败！");
+            }
+        }else if (!isUser){
+            if (fileType.equals("md")){
+                if (!content.equals("")){
+                    String filePath=utilService.addMdFile(content);
+                    if (filePath!=null){
+                        filePath=ServletUtil.getBasePath()+filePath.substring(1);
+                        return R.ok().put("filePath",filePath);
+                    }else {
+                        return R.error().put("msg","保存失败！");
+                    }
+                }else {
+                    return R.error().put("msg","文件必须不为空文件！");
+                }
+            }else if (fileType.equals("html")){
+
             }
         }
         return R.ok();

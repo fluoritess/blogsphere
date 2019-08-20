@@ -8,6 +8,7 @@ import xin.dztyh.personal.pojo.IpAddressPool;
 import xin.dztyh.personal.pojo.VisitedDayInfo;
 import xin.dztyh.personal.service.InfoService;
 import xin.dztyh.personal.service.MainService;
+import xin.dztyh.personal.util.FileIOUtils;
 import xin.dztyh.personal.util.LogInfo;
 import xin.dztyh.personal.util.PagingUtils;
 
@@ -107,6 +108,15 @@ public class ScheduledController {
             mainService.UpdateIpAddressPool(ipAddressPool);
             LogInfo.logger.info(dateString+"日，Ip "+m.getKey()+"访问"+m.getValue()+"次");
         }
+    }
+
+    /**
+     * 定时器开启，统计昨日ip地址访问数
+     */
+    @ArchivesLog(operationName = "定时器开启，[清空临时文件夹]", operationType = "定时器")
+    @Scheduled(cron = "0 00 00 * * ?")
+    public void deleteTempFilesTasks(){
+        FileIOUtils.deleteAllFiles("",true);
     }
 
 }
